@@ -119,7 +119,7 @@ for features, dataset in feat_dat_pairs:
 
         return sim_score
 
-    tqdm_desc = "Running DTW on {} dataset with {} features".format(args.dataset, args.features)
+    tqdm_desc = "Running DTW on {} dataset with {} features".format(dataset, features)
 
     labels_df["prediction"] = process_map(dtw_by_row, range(labels_df.shape[0]),
         chunksize = 1,

@@ -126,6 +126,6 @@ for features, dataset in feat_dat_pairs:
         desc = tqdm_desc
     )
 
-    output_file = os.path.join(args.output_dir, "{}_{}.csv".format(args.features, args.dataset))
+    output_file = os.path.join(args.output_dir, "{}_{}.csv".format(features, dataset))
 
     labels_df.to_csv(output_file, index = False)

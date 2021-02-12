@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+    feats_eval:
+        image: "fauxneticien/qbe-std_feats_eval"
+        volumes:
+            - ${PWD}/data:/home/qbe-std_feats_eval/data
+        working_dir: /home/qbe-std_feats_eval
+        entrypoint:
+            - /bin/bash
+        stdin_open: true
+        tty: true

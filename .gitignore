@@ -3,3 +3,4 @@ scripts/__pycache__
 qbe-std_feats_eval.code-workspace
 data/*
 !data/.gitkeep
+data.zip

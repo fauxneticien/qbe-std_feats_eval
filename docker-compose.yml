@@ -1,9 +1,23 @@
 version: '3.5'
 
 services:
-    feats_eval:
+    dev:
         image: "fauxneticien/qbe-std_feats_eval"
         volumes:
+            # For development use, 
+            # mount entire repo, including scripts
+            - ${PWD}:/home/qbe-std_feats_eval
+        working_dir: /home/qbe-std_feats_eval
+        entrypoint:
+            - /bin/bash
+        stdin_open: true
+        tty: true
+
+    prod:
+        image: "fauxneticien/qbe-std_feats_eval"
+        volumes:
+            # For 'production' use,
+            # mount only data directory
             - ${PWD}/data:/home/qbe-std_feats_eval/data
         working_dir: /home/qbe-std_feats_eval
         entrypoint:

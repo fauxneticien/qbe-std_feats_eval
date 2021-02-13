@@ -30,10 +30,10 @@ This sample dataset consists of the following files:
 ```
 sample/
 |-- labels.csv
-|-- queries
+|-- queries/
 |--|-- hello.wav
 |--|-- car.wav
-|-- references
+|-- references/
 |--|-- goodbye-hello-goodbye.wav
 |--|-- wheres-the-car.wav	
 ```

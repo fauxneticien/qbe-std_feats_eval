@@ -10,6 +10,8 @@ If you want to use GPUs with the [fauxneticien/qbe-std_feats_eval](https://hub.d
 
 ### Walkthrough with sample data
 
+Assuming you have [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) installed (the latter helps in not having to repeatedly type out `docker run ...` with a bunch of parameters, which are stored in the `docker-compose.yml` file).
+
 #### 1. Download/clone this repository and navigate into the repo directory:
 
 ```bash

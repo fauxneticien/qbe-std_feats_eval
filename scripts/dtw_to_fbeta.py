@@ -3,6 +3,7 @@ import glob
 import os
 import numpy as np
 import pandas as pd
+from pathlib import Path
 from sklearn.metrics import precision_recall_curve
 
 parser = argparse.ArgumentParser(
@@ -13,7 +14,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument('dtw_results_csv', help='name of results CSV file to process in dtw_results_dir, or _all_ to process all files')
 
 parser.add_argument('--dtw_results_dir', default = "data/processed/dtw", help='name of results file to process in dtw_results_dir')
-parser.add_argument('--fbeta_results_dir', default = "data/processed/fbeta", help='Folder to write raw fbeta calculations to')
+parser.add_argument('--fbeta_results_dir', default = "data/processed/fbeta", help='Folder to write raw fbeta calculations to, will create if folder does not exist')
 
 parser.add_argument('--beta', type=int, default = 2, help = "beta value, e.g. 1 = F1 score")
 
@@ -50,6 +51,8 @@ for dtw_results_csv in dtw_results_csvs:
         "Recall" : recall,
         "Fbeta" : fbeta_scores
     }).rename({"Fbeta" : "F" + str(beta)})
+
+    Path(args.fbeta_results_dir).mkdir(parents=True, exist_ok=True)
 
     fbeta_results_csv = os.path.join(args.fbeta_results_dir, "f{}_{}".format(beta, os.path.basename(dtw_results_csv)))
     fbeta_raw_df.to_csv(fbeta_results_csv, index = False)

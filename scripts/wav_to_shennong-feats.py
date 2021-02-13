@@ -4,6 +4,7 @@ import os
 import pickle
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
 from shennong.audio import Audio
 from shennong.features.processor.mfcc import MfccProcessor
@@ -77,17 +78,11 @@ datasets = [ os.path.basename(p) for p in glob.glob(os.path.join(args.datasets_d
 
 for feature in features:
 
-    feat_output_dir = os.path.join(args.feats_dir, feature)
-
-    if not os.path.isdir(feat_output_dir):
-        os.makedirs(feat_output_dir)
-
     for dataset in datasets:
 
-        ds_feat_output_dir = os.path.join(feat_output_dir, dataset)
-
-        if not os.path.isdir(ds_feat_output_dir):
-            os.makedirs(ds_feat_output_dir)
+        # Create output folder if it doesn't already exist
+        ds_feat_output_dir = os.path.join(args.feats_dir, feature, dataset)
+        Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
 
         queries_wav_dir  = os.path.join(args.datasets_dir, dataset, args.queries_dir)
         queries_pkl_path = os.path.join(ds_feat_output_dir, "queries.pickle")

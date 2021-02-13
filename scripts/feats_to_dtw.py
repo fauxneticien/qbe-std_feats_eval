@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 import pandas as pd
 from dtw import dtw, StepPattern
+from pathlib import Path
 from scipy.spatial.distance import cdist
 from tqdm.contrib.concurrent import process_map
 
@@ -18,7 +19,7 @@ parser.add_argument('dataset', help = 'name of dataset, use _all_ to iterate ove
 
 parser.add_argument('--feats_dir',  default='data/interim/features', help = "directory for features")
 parser.add_argument('--datasets_dir', default='data/raw/datasets', help = "directory for raw datasets and labels files")
-parser.add_argument('--output_dir',  default='data/processed/dtw', help = "directory for dtw output")
+parser.add_argument('--output_dir',  default='data/processed/dtw', help = "directory for dtw output, will create if it does not exist")
 
 parser.add_argument('--queries_file',  default='queries.pickle', help = "file with features of queries")
 parser.add_argument('--references_file',  default='references.pickle', help = "file with features of references")
@@ -40,7 +41,7 @@ for features, dataset in feat_dat_pairs:
     assert os.path.isfile(labels_csv), "Labels file does not exist at: {}".format(labels_csv)
     assert os.path.isfile(queries_pkl), "Queries features file does not exist at: {}".format(labels_csv)
     assert os.path.isfile(references_pkl), "References features file does not exist at: {}".format(labels_csv)
-    assert os.path.isdir(args.output_dir), "Output path does not exist at: {}".format(args.output_dir)
+    Path(args.output_dir).mkdir(parents=True, exist_ok=True)
 
     labels_df     = pd.read_csv(labels_csv)
     queries_df    = pickle.load(open(queries_pkl, "rb"))

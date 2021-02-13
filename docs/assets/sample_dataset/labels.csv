@@ -1,0 +1,5 @@
+﻿query,reference,label
+hello,goodbye-hello-goodbye,1
+hello,wheres-the-car,0
+car,goodbye-hello-goodbye,0
+car,wheres-the-car,1

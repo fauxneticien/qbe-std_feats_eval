@@ -1,6 +1,10 @@
 .DS_Store
 scripts/__pycache__
 qbe-std_feats_eval.code-workspace
-data/*
-!data/.gitkeep
+data/raw/datasets/*
+!data/raw/datasets/.gitkeep
+data/raw/model_checkpoints/*
+!data/raw/model_checkpoints/.gitkeep
+data/interim/*
+data/processed/*
 data.zip

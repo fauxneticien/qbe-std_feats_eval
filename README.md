@@ -49,7 +49,7 @@ where `labels.csv` provides a label (1 = query occurs in the reference, 0 = it d
 	
 #### 3. Extract features
 
-The feature extraction creates `queries.pickle` and `references.pickle` files of the following form (example shown for `data/interim/features/mfcc/queries.pickle`):
+The feature extraction creates `queries.pickle` and `references.pickle` files of the following form (example shown for `data/interim/features/mfcc/sample/queries.pickle`):
 
 | filename | features |
 |----------|----------|
@@ -94,7 +94,7 @@ By default we generate F2 scores at various thresholds and report a maximum F2 a
 ```bash
 # Launch Docker image if not already inside one
 # docker-compose run --rm dev
-python scripts/feats_to_dtw.py mfcc_sample.csv
+python scripts/dtw_to_fbeta.py mfcc_sample.csv
 #
 #     F-beta results for data/processed/dtw/mfcc_sample.csv, with beta = 2
 #        Max F-beta: 1.0

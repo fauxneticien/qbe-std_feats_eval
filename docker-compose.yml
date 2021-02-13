@@ -24,3 +24,13 @@ services:
             - /bin/bash
         stdin_open: true
         tty: true
+
+    shennong:
+        image: "fauxneticien/shennong"
+        volumes:
+            - ${PWD}:/tmp
+        working_dir: /tmp
+        entrypoint:
+            - /bin/bash
+        stdin_open: true
+        tty: true

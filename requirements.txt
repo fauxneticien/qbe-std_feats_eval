@@ -1,5 +1,8 @@
 dtw-python == 1.1.6
+git+https://github.com/pytorch/fairseq.git@5ac5e8a20a7a914698f9970c2a384f14015ece3d
 numpy == 1.19.2
 pandas == 1.2.1
 scikit-learn == 0.23.2
 scipy == 1.6.0
+torch == 1.7.0
+torchaudio == 0.7.0

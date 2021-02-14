@@ -119,10 +119,9 @@ for dataset in datasets:
         queries_wav_dir  = os.path.join(args.datasets_dir, dataset, args.queries_dir)
         refs_wav_dir    = os.path.join(args.datasets_dir, dataset, args.references_dir)
 
-        feature = "{}_{}".format(model_name, stage)
-
         if stage in ["encoder", "quantizer"]:
 
+            feature = "{}_{}".format(model_name, stage) # LV60-0FT_encoder or # LV60-0FT_quantizer
             ds_feat_output_dir = os.path.join(args.feats_dir, feature, dataset)
             Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
 
@@ -137,9 +136,7 @@ for dataset in datasets:
             for layer in layers:
                 assert layer > 0 or layer <= len(model.encoder.layers), "Specified transformer layer out of range"
 
-                # LV60-0FT_transformer => LV60-0FT_transformer-L01
-                feature += "-L" + str(layer).zfill(2)
-
+                feature = "{}_{}-L{}".format(model_name, stage, str(layer).zfill(2)) # e.g. LV60-0FT_transformer-L01
                 ds_feat_output_dir = os.path.join(args.feats_dir, feature, dataset)
                 Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
 

@@ -20,7 +20,7 @@ parser.add_argument('--beta', type=int, default = 2, help = "beta value, e.g. 1 
 
 args = parser.parse_args()
 
-dtw_results_csvs  = glob.glob(os.path.join(args.dtw_results_dir, "*.csv")) if args.dtw_results_csv == '_all_' else [ os.path.join(args.dtw_results_dir, args.dtw_results_csv) ]
+dtw_results_csvs  = glob.glob(os.path.join(args.dtw_results_dir, "*.csv")) if args.dtw_results_csv == '_all_' else [ args.dtw_results_csv ]
 
 for dtw_results_csv in dtw_results_csvs:
 

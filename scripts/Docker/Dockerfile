@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime
+FROM continuumio/miniconda3
 
 # Setup a language agnostic locale
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8

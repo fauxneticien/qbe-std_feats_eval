@@ -8,3 +8,4 @@ data/raw/model_checkpoints/*
 data/interim/*
 data/processed/*
 data.zip
+uploads

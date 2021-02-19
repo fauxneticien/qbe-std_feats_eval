@@ -69,7 +69,12 @@ python scripts/wav_to_shennong-feats.py mfcc sample
 exit
 ```
 	
-##### 3b. wav2vec 2.0 (to do)
+##### 3b. wav2vec 2.0
+
+```bash
+docker-compose run --rm dev
+python wav_to_w2v2-feats.py data/raw/model_checkpoints/20210127_LV60-0FT.pt sample
+```
 
 #### 4. Generate DTW-based scores (`scripts/feats_to_dtw.py`)
 

@@ -76,12 +76,12 @@ def dir_to_feats_pkl(feats, input_dir, output_pickle):
 features = ['mfcc', 'bnf'] if args.features == '_all_' else [ args.features ]
 datasets = [ os.path.basename(p) for p in glob.glob(os.path.join(args.datasets_dir, "*")) ] if args.dataset == '_all_' else [ args.dataset ]
 
-for feature in features:
+for dataset in datasets:
 
-    for dataset in datasets:
+    for feature in features:
 
         # Create output folder if it doesn't already exist
-        ds_feat_output_dir = os.path.join(args.feats_dir, feature, dataset)
+        ds_feat_output_dir = os.path.join(args.feats_dir, dataset, feature)
         Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
 
         queries_wav_dir  = os.path.join(args.datasets_dir, dataset, args.queries_dir)

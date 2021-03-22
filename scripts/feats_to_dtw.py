@@ -28,105 +28,107 @@ parser.add_argument('--labels_file',  default='labels.csv', help = "file indicat
 args = parser.parse_args()
 
 datasets = [ os.path.basename(p) for p in glob.glob(os.path.join(args.datasets_dir, "*")) ] if args.dataset == '_all_' else [ args.dataset ]
-features = [ os.path.basename(p) for p in glob.glob(os.path.join(args.feats_dir, "*")) ] if args.features == '_all_' else [ args.features ]
 
-feat_dat_pairs = [ (f, d) for f in features for d in datasets ]
+for dataset in datasets:
 
-for features, dataset in feat_dat_pairs:
+    # If "_all_" see what features have been extracted for given dataset (in case it differs from dataset to dataset)
+    extracted_feats = [ os.path.basename(p) for p in glob.glob(os.path.join(args.feats_dir, dataset, "*")) ] if args.features == '_all_' else [ args.features ]
 
-    labels_csv     = os.path.join(args.datasets_dir, dataset, 'labels.csv')
-    queries_pkl    = os.path.join(args.feats_dir, features, dataset, args.queries_file)
-    references_pkl = os.path.join(args.feats_dir, features, dataset, args.references_file)
+    for features in extracted_feats:
 
-    assert os.path.isfile(labels_csv), "Labels file does not exist at: {}".format(labels_csv)
-    assert os.path.isfile(queries_pkl), "Queries features file does not exist at: {}".format(labels_csv)
-    assert os.path.isfile(references_pkl), "References features file does not exist at: {}".format(labels_csv)
-    Path(args.output_dir).mkdir(parents=True, exist_ok=True)
+        labels_csv     = os.path.join(args.datasets_dir, dataset, 'labels.csv')
+        queries_pkl    = os.path.join(args.feats_dir, dataset, features, args.queries_file)
+        references_pkl = os.path.join(args.feats_dir, dataset, features, args.references_file)
 
-    labels_df     = pd.read_csv(labels_csv)
-    queries_df    = pickle.load(open(queries_pkl, "rb"))
-    references_df = pickle.load(open(references_pkl, "rb"))
+        assert os.path.isfile(labels_csv), "Labels file does not exist at: {}".format(labels_csv)
+        assert os.path.isfile(queries_pkl), "Queries features file does not exist at: {}".format(queries_pkl)
+        assert os.path.isfile(references_pkl), "References features file does not exist at: {}".format(references_pkl)
+        Path(args.output_dir).mkdir(parents=True, exist_ok=True)
 
-    queries_set    = set(labels_df["query"].unique())
-    references_set = set(labels_df["reference"].unique())
+        labels_df     = pd.read_csv(labels_csv)
+        queries_df    = pickle.load(open(queries_pkl, "rb"))
+        references_df = pickle.load(open(references_pkl, "rb"))
 
-    # Check that all the query-reference file pairs actually occur in the features files
-    assert queries_set.difference(set(queries_df["filename"].unique())) == set(), "Queries in {} missing from filenames in {}".format(labels_csv, queries_pkl)
-    assert references_set.difference(set(references_df["filename"].unique())) == set(), "References in {} missing from filenames {}".format(labels_csv, references_pkl)
+        queries_set    = set(labels_df["query"].unique())
+        references_set = set(labels_df["reference"].unique())
 
-    # Add a 'prediction' column to labels dataframe, where the value is a
-    # score between 0 and 1 calculated by using DTW to calculate whether there
-    # is a region inside the reference that is spectrally similar to the query
-    # 
-    # | query | reference   | label | prediction |
-    # | hello | hello there |   1   |    0.99    |
-    # | hello | cool beans  |   0   |    0.51    |
+        # Check that all the query-reference file pairs actually occur in the features files
+        assert queries_set.difference(set(queries_df["filename"].unique())) == set(), "Queries in {} missing from filenames in {}".format(labels_csv, queries_pkl)
+        assert references_set.difference(set(references_df["filename"].unique())) == set(), "References in {} missing from filenames {}".format(labels_csv, references_pkl)
 
-    def dtw_by_row(row_number):
+        # Add a 'prediction' column to labels dataframe, where the value is a
+        # score between 0 and 1 calculated by using DTW to calculate whether there
+        # is a region inside the reference that is spectrally similar to the query
+        # 
+        # | query | reference   | label | prediction |
+        # | hello | hello there |   1   |    0.99    |
+        # | hello | cool beans  |   0   |    0.51    |
 
-        # Fetch metadata and features for relevant row in labels_df dataframe
-        row_data               = labels_df.iloc[row_number]
-        query_feats_matrix     = queries_df.loc[queries_df["filename"]       == row_data["query"]]["features"].values[0]
-        reference_feats_matrix = references_df.loc[references_df["filename"] == row_data["reference"]]["features"].values[0]
+        def dtw_by_row(row_number):
 
-        assert query_feats_matrix.shape[1] == reference_feats_matrix.shape[1], "Query and reference feature matrices differ in number of columns"
+            # Fetch metadata and features for relevant row in labels_df dataframe
+            row_data               = labels_df.iloc[row_number]
+            query_feats_matrix     = queries_df.loc[queries_df["filename"]       == row_data["query"]]["features"].values[0]
+            reference_feats_matrix = references_df.loc[references_df["filename"] == row_data["reference"]]["features"].values[0]
 
-                        # For two distance matrices Q of shape (M, F) and R of shape (N, F) where M, N time frames and F feature columns
-                        # standardise each feature matrix within each feature component then compute Euclidean distance between each pair of
-                        # time frames. Produces a distance matrix of shape (M, N).
-        distance_matrix = cdist(query_feats_matrix, reference_feats_matrix, 'seuclidean', V = None)
-                        # Normalise to [0, 1] range by subtracting min, then dividing by range (ptp = peak-to-peak)
-        distance_matrix = (distance_matrix - distance_matrix.min(0)) / distance_matrix.ptp(0)
+            assert query_feats_matrix.shape[1] == reference_feats_matrix.shape[1], "Query and reference feature matrices differ in number of columns"
 
-        # Segmental DTW: divide reference into segments by moving
-        # a window roughly the size of the query along the length
-        # of the reference and calculate a DTW alignment at each step
+                            # For two distance matrices Q of shape (M, F) and R of shape (N, F) where M, N time frames and F feature columns
+                            # standardise each feature matrix within each feature component then compute Euclidean distance between each pair of
+                            # time frames. Produces a distance matrix of shape (M, N).
+            distance_matrix = cdist(query_feats_matrix, reference_feats_matrix, 'seuclidean', V = None)
+                            # Normalise to [0, 1] range by subtracting min, then dividing by range (ptp = peak-to-peak)
+            distance_matrix = (distance_matrix - distance_matrix.min(0)) / distance_matrix.ptp(0)
 
-        segdtw_dists = []
-        query_length, reference_length = distance_matrix.shape
+            # Segmental DTW: divide reference into segments by moving
+            # a window roughly the size of the query along the length
+            # of the reference and calculate a DTW alignment at each step
 
-        # reject if alignment less than half of query size
-        # or if larger than 1.5 times query size
-        min_match_ratio, max_match_ratio = [0.5, 1.5]
+            segdtw_dists = []
+            query_length, reference_length = distance_matrix.shape
 
-        window_size      = int(query_length * max_match_ratio)
-        last_segment_end = int(reference_length - (min_match_ratio * query_length))
+            # reject if alignment less than half of query size
+            # or if larger than 1.5 times query size
+            min_match_ratio, max_match_ratio = [0.5, 1.5]
 
-        for r_i in range(last_segment_end):
-            
-            segment_start = r_i
-            segment_end   = min(r_i + window_size, reference_length)
+            window_size      = int(query_length * max_match_ratio)
+            last_segment_end = int(reference_length - (min_match_ratio * query_length))
 
-            segment_data  = distance_matrix[:,segment_start:segment_end]
-            
-            dtw_obj = dtw(segment_data,
-                step_pattern = "symmetricP1", # See Sakoe & Chiba (1978) for definition of step pattern
-                open_end = True,              # Let alignment end anywhere along the segment (need not be at lower corner)
-                distance_only = True          # Speed up dtw(), no backtracing for alignment path
-            )
+            for r_i in range(last_segment_end):
+                
+                segment_start = r_i
+                segment_end   = min(r_i + window_size, reference_length)
 
-            match_ratio = dtw_obj.jmin / query_length
+                segment_data  = distance_matrix[:,segment_start:segment_end]
+                
+                dtw_obj = dtw(segment_data,
+                    step_pattern = "symmetricP1", # See Sakoe & Chiba (1978) for definition of step pattern
+                    open_end = True,              # Let alignment end anywhere along the segment (need not be at lower corner)
+                    distance_only = True          # Speed up dtw(), no backtracing for alignment path
+                )
 
-            if match_ratio < min_match_ratio or match_ratio > max_match_ratio:
-                segdtw_dists.append(1)
-            else:
-                segdtw_dists.append(dtw_obj.normalizedDistance)
+                match_ratio = dtw_obj.jmin / query_length
 
-        # Convert distance (lower is better) to similary score (is higher better)
-        # makes it easier to compare with CNN output probabilities
-        #
-        # Return 0 if segdtw_dists is [] (i.e. no good alignments found)
-        sim_score = 0 if len(segdtw_dists) == 0 else 1 - min(segdtw_dists)
+                if match_ratio < min_match_ratio or match_ratio > max_match_ratio:
+                    segdtw_dists.append(1)
+                else:
+                    segdtw_dists.append(dtw_obj.normalizedDistance)
 
-        return sim_score
+            # Convert distance (lower is better) to similary score (is higher better)
+            # makes it easier to compare with CNN output probabilities
+            #
+            # Return 0 if segdtw_dists is [] (i.e. no good alignments found)
+            sim_score = 0 if len(segdtw_dists) == 0 else 1 - min(segdtw_dists)
 
-    tqdm_desc = "Running DTW on {} dataset with {} features".format(dataset, features)
+            return sim_score
 
-    labels_df["prediction"] = process_map(dtw_by_row, range(labels_df.shape[0]),
-        chunksize = 1,
-        desc = tqdm_desc
-    )
+        tqdm_desc = "Running DTW on {} dataset with {} features".format(dataset, features)
 
-    output_file = os.path.join(args.output_dir, "{}_{}.csv".format(features, dataset))
+        labels_df["prediction"] = process_map(dtw_by_row, range(labels_df.shape[0]),
+            chunksize = 1,
+            desc = tqdm_desc
+        )
 
-    labels_df.to_csv(output_file, index = False)
+        output_file = os.path.join(args.output_dir, "{}_{}.csv".format(features, dataset))
+
+        labels_df.to_csv(output_file, index = False)

@@ -122,7 +122,7 @@ for dataset in datasets:
         if stage in ["encoder", "quantizer"]:
 
             feature = "{}_{}".format(model_name, stage) # LV60-0FT_encoder or # LV60-0FT_quantizer
-            ds_feat_output_dir = os.path.join(args.feats_dir, feature, dataset)
+            ds_feat_output_dir = os.path.join(args.feats_dir, dataset, feature)
             Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
 
             queries_pkl_path = os.path.join(ds_feat_output_dir, "queries.pickle")

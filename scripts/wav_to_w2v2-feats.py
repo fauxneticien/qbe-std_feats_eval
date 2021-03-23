@@ -137,7 +137,7 @@ for dataset in datasets:
                 assert layer > 0 or layer <= len(model.encoder.layers), "Specified transformer layer out of range"
 
                 feature = "{}_{}-L{}".format(model_name, stage, str(layer).zfill(2)) # e.g. LV60-0FT_transformer-L01
-                ds_feat_output_dir = os.path.join(args.feats_dir, feature, dataset)
+                ds_feat_output_dir = os.path.join(args.feats_dir, dataset, feature)
                 Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
 
                 queries_pkl_path = os.path.join(ds_feat_output_dir, "queries.pickle")

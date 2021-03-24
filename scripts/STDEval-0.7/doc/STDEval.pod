@@ -1,0 +1,210 @@
+=head1 NAME
+
+STDEval.pl - Evaluation program for Speech Term Detection
+
+=head1 SYNOPSIS
+
+B<STDEval.pl -e ecffile -r rttmfile -s stdfile -t termfile [-F fthresh] [-S sthresh] [-I name] [-E] [-C [filename]] [-a [filename]] [-O [filename]] [-o [filename]] [-d filename] [-D filename] [-H folder] [-Q folder] [-q attribute] [-w] [-T [set_name:]termid[,termid[, ...]]] [-Y [set_name:]sourcetype[,sourcetype[, ...]]] [-N file/channel[,file/channel[, ...]]] [-A] [-c cachefile] [-k value] [-K value] [-P] [-n value] [-p value]>
+
+=head1 DESCRIPTION
+
+Evaluation Toolkit (STDEval) Software. Develop standard technology evaluation tools and administer the open evaluation of Spoken Term Detection technologies.
+
+=head1 USAGE
+
+The release contains test files and example files in the test_suite
+directory.  The 'test2.*' files comprise a complete set of input files
+supplied as an example usage of the evaluation tool.  The following
+command generates two reports, 'example.occ.txt' and
+'example.ali.txt'.  A DET curve is also produced in the example.det.*
+files which can be used with the GNUPLOT program to render the graph.
+The -c option writes intermediate information to so that subsequent
+executions can avoid searching the RTTM file for term occurences.
+
+    perl -I src ./src/STDEval.pl -e test_suite/test2.ecf.xml \
+	-r test_suite/test2.rttm -s test_suite/test2.stdlist.xml \
+	-t test_suite/test2.tlist.xml -A -o example.occ.txt \
+        -a example.ali.txt -d example.det -c example.cache
+
+=head1 OPTIONS
+
+=over
+
+=item B<Required file arguments:>
+
+=over
+
+=item B<-e>, B<--ecffile>
+
+The ECF file name.
+
+=item B<-r>, B<--rttmfile>
+
+The RTTM filename.
+
+=item B<-s>, B<--stdfile>
+
+The STDList filename.
+
+=item B<-t>, B<--termfile>
+
+The TermList filename.
+
+=back
+
+=item B<Find options:>
+
+=over
+
+=item B<-F>, B<--Find-threshold> <thresh>
+
+The <thresh> value represents the maximum time gap in seconds between two words in order to consider the two words to be part of a term when searching the RTTM file for reference term occurences. (default: 0.5).
+
+=item B<-S>, B<--Similarity-threshold> <thresh>
+
+The <thresh> value represents the maximum time distance between the temporal extent of the reference term and the mid point of system's detected term for the two to be considered a pair of potentially aligned terms. (default: 0.5).
+
+=back
+
+=item B<Filter options:>
+
+=over
+
+=item B<-E>, B<--ECF-filtering>
+
+System and reference terms must be in the ECF segments (default: off).
+
+=item B<-T>, B<--Term> [<set_name>:]<termid>[,<termid>[, ...]]
+
+Only the <termid> or the list of <termid> (separated by ',') will be displayed in the Conditional Occurence Report and Conditional DET Curve. An name can be given to the set by specifying <set_name> (<termid> can be a regular expression).
+
+=item B<-Y>, B<--YSourcetype> [<set_name>:]<type>[,<type>[, ...]]
+
+Only the <type> or the list of <type> (separated by ',') will be displayed in the Conditional Occurence Report and Conditional DET Curve. An name can be given to the set by specifying <set_name> (<type> can be a regular expression).
+
+=item B<-N>, B<--Namefile> <file/channel>[,<file/channel>[, ...]]
+
+Only the <file> and <channel> or the list of <file> and <channel> (separated by ',') will be displayed in the Occurence Report and DET Curve (<file> and <channel> can be regular expressions).
+
+=item B<-q>, B<--query> <name_attribute>
+
+Populate the Conditional Reports with set of terms identified by <name_attribute> in the the term list's 'terminfo' tags.
+
+=item B<-w>, B<--words-oov>
+
+Generate a Conditional Report sorted by terms that are Out-Of-Vocabulary (OOV) for the system.
+
+=back
+
+=item B<Report options:>
+
+=over
+
+=item B<-a>, B<--align-report> <filename>
+
+Output the Alignment Report. Filename is optional, if not specified, it displays in the STDOUT.
+
+=item B<-o>, B<--occurrence-report> <filename>
+
+Output the Occurence Report. Filename is optional, if not specified, it displays in the STDOUT.
+
+=item B<-O>, B<--Occurrence-conditionalreport> <filename>
+
+Output the Conditional Occurence Report. Filename is optional, if not specified, it displays in the STDOUT.
+
+=item B<-d>, B<--det-curve> <filename>
+
+Output the Conditional DET Curve.
+
+=item B<-D>, B<--DET-conditional-curve> <filename>
+
+Output the Conditional DET Curve.
+
+=item B<-P>, B<--Pooled-DETs>
+
+Produce term occurrence DET Curves instead of 'Term Weighted' DETs. '-d' and '-D' must still be used to specify the file names for the DET plots.
+
+=item B<-C>, B<--CSV> <filename>
+
+Output the CSV Report.
+
+=item B<-H>, B<--HTML> <folder>
+
+Output the Occurrence HTML Report.
+
+=item B<-Q>, B<--QHTML> <folder>
+
+Output the Conditional Occurrence HTML Report.
+
+=item B<-A>, B<--All-display>
+
+Add an additional column in the Occurence report containing the overall statistics for every term (default: off).
+
+=item B<-k>, B<--koefcorrect> <value>
+
+Value for correct (C).
+
+=item B<-K>, B<--Koefincorrect> <value>
+
+Value for incorrect (V).
+
+=item B<-n>, B<--number-trials-per-sec> <value>
+
+The number of trials per second (default: 1).
+
+=item B<-p>, B<--prob-of-term> <value>
+
+The probability of a term (default: 0.0001).
+
+=item B<-I>, B<--ID-System> <name>
+
+Overwrites the name of the STD system.
+
+=back
+
+=item B<Other options:>
+
+=over
+
+=item B<-c>, B<--cache-find> <filename>
+
+Use the caching file for finding occurrences. If the file does not exist, it creates the cache during the search.
+
+=item B<-h>, B<--help>
+
+Display the help.
+
+=item B<-v>, B<--version>
+
+Display the version number.
+
+=head1 BUGS
+
+=head1 NOTES
+
+=item B<filter options>
+
+The filter options I<-T, --Term> and I<-Y, --YSourcetype> can be called several time on the command-line. Every time the option I<-T> occurs, it creates a set of term IDs. The name of the set can be specified by adding the name and ':' before listing the Term IDs. By the same way, sets can specify for the source types. By doing this, it will create sub-reports for every possible set combinaisons. Every sub-reports will be displayed as a DET Curve if I<-D> option has been called. In the same way, term sets represent rows and source type sets represent column in the Conditional Occurrence Report(I<-O> option).
+
+For example, the combinaison of options: I<-T alpha:TERM-01,TERM-02 -T beta:TERM-03 -Y BNEWS+CTS:BNEWS,CTS -Y CONFMTG> generates in the conditional occurrence report 2 rows: alpha and beta, and 2 columns BNEWS+CTS, CONFMTG.
+
+=head1 AUTHORS
+
+=item Jerome Ajot <jerome.ajot@nist.gov>
+
+=item Jon Fiscus <jonathan.fiscus@nist.gov>
+
+=item George Doddington <george.doddington@comcast.net>
+
+=head1 VERSION
+
+STDEval.pl version 0.7 20061206
+
+=head1 COPYRIGHT 
+
+This software was developed at the National Institute of Standards and Technology by employees of the Federal Government in the course of their official duties.  Pursuant to Title 17 Section 105 of the United States Code this software is not subject to copyright protection within the United States and is in the public domain. asclite is an experimental system.  NIST assumes no responsibility whatsoever for its use by any party.
+
+THIS SOFTWARE IS PROVIDED "AS IS."  With regard to this software, NIST MAKES NO EXPRESS OR IMPLIED WARRANTY AS TO ANY MATTER WHATSOEVER, INCLUDING MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+
+=cut
+

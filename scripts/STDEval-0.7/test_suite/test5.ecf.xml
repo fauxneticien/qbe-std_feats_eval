@@ -1,0 +1,28 @@
+<ecf source_signal_duration="7216.113" version="060728-1244">
+<excerpt audio_filename="audio/eval03/arabic/bnews/20010217_0000_0100_VOA_ARB_exA.sph" channel="1" tbeg="0.000" dur="1839.029" language="arabic" source_type="bnews"/>
+<excerpt audio_filename="audio/eval03/arabic/bnews/20010223_1530_1600_NTV_ARB_exA.sph" channel="1" tbeg="0.000" dur="1731.334" language="arabic" source_type="bnews"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_10843_exA.sph" channel="1" tbeg="0.000" dur="301.425" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_10843_exA.sph" channel="2" tbeg="0.000" dur="301.425" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_10981_exA.sph" channel="1" tbeg="0.000" dur="307.800" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_10981_exA.sph" channel="2" tbeg="0.000" dur="307.800" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11164_exA.sph" channel="1" tbeg="0.000" dur="301.925" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11164_exA.sph" channel="2" tbeg="0.000" dur="301.925" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11260_exA.sph" channel="1" tbeg="0.000" dur="301.550" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11260_exA.sph" channel="2" tbeg="0.000" dur="301.550" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11683_exA.sph" channel="1" tbeg="0.000" dur="303.500" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11683_exA.sph" channel="2" tbeg="0.000" dur="303.500" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11720_exA.sph" channel="1" tbeg="0.000" dur="305.450" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11720_exA.sph" channel="2" tbeg="0.000" dur="305.450" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11761_exA.sph" channel="1" tbeg="0.000" dur="302.775" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11761_exA.sph" channel="2" tbeg="0.000" dur="302.775" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11960_exA.sph" channel="1" tbeg="0.000" dur="302.025" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_11960_exA.sph" channel="2" tbeg="0.000" dur="302.025" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_12281_exA.sph" channel="1" tbeg="0.000" dur="309.850" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_12281_exA.sph" channel="2" tbeg="0.000" dur="309.850" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_12721_exA.sph" channel="1" tbeg="0.000" dur="305.350" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_12721_exA.sph" channel="2" tbeg="0.000" dur="305.350" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_12981_exA.sph" channel="1" tbeg="0.000" dur="304.150" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_12981_exA.sph" channel="2" tbeg="0.000" dur="304.150" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_13942_exA.sph" channel="1" tbeg="0.000" dur="299.950" language="arabic" source_type="cts"/>
+<excerpt audio_filename="audio/dev04f/arabic/cts/fsa_13942_exA.sph" channel="2" tbeg="0.000" dur="299.950" language="arabic" source_type="cts"/>
+</ecf>

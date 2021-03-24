@@ -1,0 +1,20 @@
+<stdlist termlist_filename="expt_06_std_eval06_mand_all_spch_expt_1_Dev06.tlist.xml" indexing_time="74390.00" language="mandarin" index_size="21235877" system_id="">
+  <detected_termlist termid="dev06-0001" term_search_time="24.3" oov_term_count="0">
+    <term file="NIST_20020214-1148_d05_NONE" channel="1" tbeg="6.956" dur="0.53" score="4.115" decision="YES"/>
+    <term file="NIST_20020214-1148_d05_NONE" channel="1" tbeg="8.132" dur="1.00" score="1.25" decision="NO"/>
+    <term file="NIST_20020214-1148_d05_NONE" channel="1" tbeg="4.5" dur="0.54" score="6.213" decision="YES"/>
+  </detected_termlist>
+  <detected_termlist termid="dev06-0002" term_search_time="100.0" oov_term_count="0">
+
+  </detected_termlist>
+  <detected_termlist termid="dev06-0003" term_search_time="56.8" oov_term_count="0">
+    <term file="NIST_20020214-1148_d05_NONE" channel="1" tbeg="45.5" dur="1.25" score="4.5" decision="YES"/>
+  </detected_termlist>
+  <detected_termlist termid="dev06-0004" term_search_time="0.5" oov_term_count="0">
+    <term file="NIST_20020214-1148_d05_NONE" channel="2" tbeg="100.002" dur="1.54" score="9.6" decision="YES"/>
+  </detected_termlist>
+  <detected_termlist termid="dev06-0005" term_search_time="15.9" oov_term_count="0">
+    <term file="NIST_20020214-1148_d05_NONE" channel="1" tbeg="0.09" dur="4.003" score="5.01" decision="YES"/>
+  </detected_termlist>
+</stdlist>
+

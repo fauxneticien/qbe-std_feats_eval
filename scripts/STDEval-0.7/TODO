@@ -1,0 +1,6 @@
+File:  TODO
+Date:  November 22nd, 2006
+STDEval Version: 0.6
+
+- Add a separate API and program interface for DET plots.
+- Remove the COR column from all the reports.

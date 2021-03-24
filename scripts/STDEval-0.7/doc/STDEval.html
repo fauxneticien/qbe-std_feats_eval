@@ -1,0 +1,221 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>STDEval.pl</B> <B>-e</B> <B>ecffile</B> <B>-r</B> <B>rttmfile</B> <B>-s</B> <B>stdfile</B> <B>-t</B> <B>termfile</B> <B>[-F</B> <B>fthresh]</B>
+       <B>[-S</B> <B>sthresh]</B> <B>[-I</B> <B>name]</B> <B>[-E]</B> <B>[-C</B> <B>[filename]]</B> <B>[-a</B> <B>[filename]]</B> <B>[-O</B> <B>[file-</B>
+       <B>name]]</B> <B>[-o</B> <B>[filename]]</B> <B>[-d</B> <B>filename]</B> <B>[-D</B> <B>filename]</B> <B>[-H</B> <B>folder]</B> <B>[-Q</B>
+       <B>folder]</B> <B>[-q</B> <B>attribute]</B> <B>[-w]</B> <B>[-T</B> <B>[set_name:]termid[,termid[,</B> <B>...]]]</B> <B>[-Y</B>
+       <B>[set_name:]sourcetype[,sourcetype[,</B> <B>...]]]</B> <B>[-N</B> <B>file/channel[,file/chan-</B>
+       <B>nel[,</B> <B>...]]]</B> <B>[-A]</B> <B>[-c</B> <B>cachefile]</B> <B>[-k</B> <B>value]</B> <B>[-K</B> <B>value]</B> <B>[-P]</B> <B>[-n</B> <B>value]</B>
+       <B>[-p</B> <B>value]</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       Evaluation Toolkit (STDEval) Software. Develop standard technology
+       evaluation tools and administer the open evaluation of Spoken Term
+       Detection technologies.
+
+
+</PRE>
+<H2>USAGE</H2><PRE>
+       The release contains test files and example files in the test_suite
+       directory.  The 'test2.*' files comprise a complete set of input files
+       supplied as an example usage of the evaluation tool.  The following
+       command generates two reports, 'example.occ.txt' and 'example.ali.txt'.
+       A DET curve is also produced in the example.det.*  files which can be
+       used with the GNUPLOT program to render the graph.  The -c option
+       writes intermediate information to so that subsequent executions can
+       avoid searching the RTTM file for term occurences.
+
+           perl -I src ./src/STDEval.pl -e test_suite/test2.ecf.xml \
+               -r test_suite/test2.rttm -s test_suite/test2.stdlist.xml \
+               -t test_suite/test2.tlist.xml -A -o example.occ.txt \
+               -a example.ali.txt -d example.det -c example.cache
+
+
+</PRE>
+<H2>OPTIONS</H2><PRE>
+       <B>Required</B> <B>file</B> <B>arguments:</B>
+           <B>-e</B>, <B>--ecffile</B>
+               The ECF file name.
+
+           <B>-r</B>, <B>--rttmfile</B>
+               The RTTM filename.
+
+           <B>-s</B>, <B>--stdfile</B>
+               The STDList filename.
+
+           <B>-t</B>, <B>--termfile</B>
+               The TermList filename.
+
+       <B>Find</B> <B>options:</B>
+           <B>-F</B>, <B>--Find-threshold</B> &lt;thresh&gt;
+               The &lt;thresh&gt; value represents the maximum time gap in seconds
+               between two words in order to consider the two words to be part
+               of a term when searching the RTTM file for reference term
+               occurences. (default: 0.5).
+
+           <B>-S</B>, <B>--Similarity-threshold</B> &lt;thresh&gt;
+               The &lt;thresh&gt; value represents the maximum time distance between
+               the temporal extent of the reference term and the mid point of
+               system's detected term for the two to be considered a pair of
+               potentially aligned terms. (default: 0.5).
+
+       <B>Filter</B> <B>options:</B>
+           <B>-E</B>, <B>--ECF-filtering</B>
+               System and reference terms must be in the ECF segments
+               (default: off).
+
+           <B>-T</B>, <B>--Term</B> [&lt;set_name&gt;:]&lt;termid&gt;[,&lt;termid&gt;[, ...]]
+               Only the &lt;termid&gt; or the list of &lt;termid&gt; (separated by ',')
+               will be displayed in the Conditional Occurence Report and Con-
+               ditional DET Curve. An name can be given to the set by specify-
+               ing &lt;set_name&gt; (&lt;termid&gt; can be a regular expression).
+
+           <B>-Y</B>, <B>--YSourcetype</B> [&lt;set_name&gt;:]&lt;type&gt;[,&lt;type&gt;[, ...]]
+               Only the &lt;type&gt; or the list of &lt;type&gt; (separated by ',') will
+               be displayed in the Conditional Occurence Report and Condi-
+               tional DET Curve. An name can be given to the set by specifying
+               &lt;set_name&gt; (&lt;type&gt; can be a regular expression).
+
+           <B>-N</B>, <B>--Namefile</B> &lt;file/channel&gt;[,&lt;file/channel&gt;[, ...]]
+               Only the &lt;file&gt; and &lt;channel&gt; or the list of &lt;file&gt; and &lt;chan-
+               nel&gt; (separated by ',') will be displayed in the Occurence
+               Report and DET Curve (&lt;file&gt; and &lt;channel&gt; can be regular
+               expressions).
+
+           <B>-q</B>, <B>--query</B> &lt;name_attribute&gt;
+               Populate the Conditional Reports with set of terms identified
+               by &lt;name_attribute&gt; in the the term list's 'terminfo' tags.
+
+           <B>-w</B>, <B>--words-oov</B>
+               Generate a Conditional Report sorted by terms that are Out-Of-
+               Vocabulary (OOV) for the system.
+
+       <B>Report</B> <B>options:</B>
+           <B>-a</B>, <B>--align-report</B> &lt;filename&gt;
+               Output the Alignment Report. Filename is optional, if not spec-
+               ified, it displays in the STDOUT.
+
+           <B>-o</B>, <B>--occurrence-report</B> &lt;filename&gt;
+               Output the Occurence Report. Filename is optional, if not spec-
+               ified, it displays in the STDOUT.
+
+           <B>-O</B>, <B>--Occurrence-conditionalreport</B> &lt;filename&gt;
+               Output the Conditional Occurence Report. Filename is optional,
+               if not specified, it displays in the STDOUT.
+
+           <B>-d</B>, <B>--det-curve</B> &lt;filename&gt;
+               Output the Conditional DET Curve.
+
+           <B>-D</B>, <B>--DET-conditional-curve</B> &lt;filename&gt;
+               Output the Conditional DET Curve.
+
+           <B>-P</B>, <B>--Pooled-DETs</B>
+               Produce term occurrence DET Curves instead of 'Term Weighted'
+               DETs. '-d' and '-D' must still be used to specify the file
+               names for the DET plots.
+
+           <B>-C</B>, <B>--CSV</B> &lt;filename&gt;
+               Output the CSV Report.
+
+           <B>-H</B>, <B>--HTML</B> &lt;folder&gt;
+               Output the Occurrence HTML Report.
+
+           <B>-Q</B>, <B>--QHTML</B> &lt;folder&gt;
+               Output the Conditional Occurrence HTML Report.
+
+           <B>-A</B>, <B>--All-display</B>
+               Add an additional column in the Occurence report containing the
+               overall statistics for every term (default: off).
+
+           <B>-k</B>, <B>--koefcorrect</B> &lt;value&gt;
+               Value for correct (C).
+
+           <B>-K</B>, <B>--Koefincorrect</B> &lt;value&gt;
+               Value for incorrect (V).
+
+           <B>-n</B>, <B>--number-trials-per-sec</B> &lt;value&gt;
+               The number of trials per second (default: 1).
+
+           <B>-p</B>, <B>--prob-of-term</B> &lt;value&gt;
+               The probability of a term (default: 0.0001).
+
+           <B>-I</B>, <B>--ID-System</B> &lt;name&gt;
+               Overwrites the name of the STD system.
+
+       <B>Other</B> <B>options:</B>
+           <B>-c</B>, <B>--cache-find</B> &lt;filename&gt;
+               Use the caching file for finding occurrences. If the file does
+               not exist, it creates the cache during the search.
+
+           <B>-h</B>, <B>--help</B>
+               Display the help.
+
+           <B>-v</B>, <B>--version</B>
+               Display the version number.
+
+
+</PRE>
+<H2>BUGS</H2><PRE>
+
+</PRE>
+<H2>NOTES</H2><PRE>
+       <B>filter</B> <B>options</B>
+           The filter options <I>-T,</I> <I>--Term</I> and <I>-Y,</I> <I>--YSourcetype</I> can be called
+           several time on the command-line. Every time the option <I>-T</I> occurs,
+           it creates a set of term IDs. The name of the set can be specified
+           by adding the name and ':' before listing the Term IDs. By the same
+           way, sets can specify for the source types. By doing this, it will
+           create sub-reports for every possible set combinaisons. Every sub-
+           reports will be displayed as a DET Curve if <I>-D</I> option has been
+           called. In the same way, term sets represent rows and source type
+           sets represent column in the Conditional Occurrence Report(<I>-O</I>
+           option).
+
+           For example, the combinaison of options: <I>-T</I> <I>alpha:TERM-01,TERM-02</I>
+           <I>-T</I> <I>beta:TERM-03</I> <I>-Y</I> <I>BNEWS+CTS:BNEWS,CTS</I> <I>-Y</I> <I>CONFMTG</I> generates in the
+           conditional occurrence report 2 rows: alpha and beta, and 2 columns
+           BNEWS+CTS, CONFMTG.
+
+
+</PRE>
+<H2>AUTHORS</H2><PRE>
+       Jerome Ajot &lt;jerome.ajot@nist.gov&gt;
+       Jon Fiscus &lt;jonathan.fiscus@nist.gov&gt;
+       George Doddington &lt;george.doddington@comcast.net&gt;
+
+
+</PRE>
+<H2>VERSION</H2><PRE>
+       STDEval.pl version 0.7 20061206
+
+
+</PRE>
+<H2>COPYRIGHT</H2><PRE>
+       This software was developed at the National Institute of Standards and
+       Technology by employees of the Federal Government in the course of
+       their official duties.  Pursuant to Title 17 Section 105 of the United
+       States Code this software is not subject to copyright protection within
+       the United States and is in the public domain. asclite is an experimen-
+       tal system.  NIST assumes no responsibility whatsoever for its use by
+       any party.
+
+       THIS SOFTWARE IS PROVIDED "AS IS."  With regard to this software, NIST
+       MAKES NO EXPRESS OR IMPLIED WARRANTY AS TO ANY MATTER WHATSOEVER,
+       INCLUDING MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+
+perl v5.8.6                       2006-12-06                        <B>STDEVAL(1)</B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

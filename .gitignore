@@ -9,3 +9,4 @@ data/interim/*
 data/processed/*
 data.zip
 uploads
+.Rproj.user

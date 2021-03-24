@@ -1,0 +1,36 @@
+<stdlist termlist_filename="/tmp/tlist" indexing_time="333" language="mandarin" index_size="444" system_id="hello">
+  <detected_termlist termid="Dev06_mand_0160" term_search_time="0" oov_term_count="0">
+  </detected_termlist>
+  <detected_termlist termid="Dev06_mand_0175" term_search_time="0" oov_term_count="0">
+  </detected_termlist>
+  <detected_termlist termid="Dev06_mand_0487" term_search_time="0" oov_term_count="0">
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="40.168" dur="0.1850" score="0.987098" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="206.608" dur="0.1450" score="0.965602" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="217.048" dur="0.1500" score="0.971378" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="248.058" dur="0.1530" score="0.983781" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="249.825" dur="0.1670" score="0.977796" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="259.628" dur="0.1530" score="0.977847" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="273.518" dur="0.1760" score="0.960224" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="280.328" dur="0.1300" score="0.977988" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="305.418" dur="0.1450" score="0.987637" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="505.708" dur="0.1630" score="0.983008" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="547.928" dur="0.2600" score="0.984539" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="619.548" dur="0.2000" score="0.9404" decision="YES"/>
+    <term file="cf_1312_exA" channel="1" tbeg="239.851" dur="0.1690" score="0.497304" decision="YES"/>
+    <term file="cf_1312_exA" channel="1" tbeg="277.420" dur="0.2230" score="0.266045" decision="YES"/>
+    <term file="cf_1312_exA" channel="2" tbeg="84.390" dur="0.1850" score="0.503785" decision="YES"/>
+  </detected_termlist>
+  <detected_termlist termid="Dev06_mand_0504" term_search_time="0" oov_term_count="0">
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="88.808" dur="0.4400" score="0.951465" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="92.058" dur="0.2800" score="0.959972" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="368.068" dur="0.2200" score="0.981645" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="547.568" dur="0.3600" score="0.977694" decision="YES"/>
+    <term file="20010209_1330_1400_CTV_MAN_exA" channel="1" tbeg="652.278" dur="0.4500" score="0.970524" decision="YES"/>
+  </detected_termlist>
+  <detected_termlist termid="Dev06_mand_0505" term_search_time="0" oov_term_count="0">
+    <term file="cf_1312_exA" channel="1" tbeg="109.547" dur="0.1350" score="0.777792" decision="YES"/>
+    <term file="cf_1312_exA" channel="2" tbeg="84.050" dur="0.1700" score="0.866443" decision="YES"/>
+    <term file="cf_1312_exA" channel="2" tbeg="99.975" dur="0.1640" score="0.641033" decision="YES"/>
+    <term file="cf_1312_exA" channel="2" tbeg="146.655" dur="0.1480" score="0.782279" decision="YES"/>
+  </detected_termlist>
+</stdlist>

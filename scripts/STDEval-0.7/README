@@ -1,0 +1,59 @@
+File:  README
+Date:  December 12th, 2006
+STDEval Version: 0.7
+
+This directory contains the Spoken Term Detection Evaluation Toolkit
+(STDEval). It was develop as the standard technology evaluation tool
+for the open evaluation of Spoken Term Detection technologies.  
+
+Version 0.1 contains a single tool, 'STDEval'.  It uses the inputs
+described in the STD Evaluation plan to complete the evaluation of a
+system.  A manual page, (which is built by the make process),
+describes to commandline options.
+
+INSTALLATION
+------------
+
+The tools do not implement the typical installation process of copying
+files to a global binary directory.  Instead, the tools are to be run
+from the base directory with the command:
+
+  % perl -I <DIR> <DIR>/STDEval.pl ....options....
+
+The top level make file contains a target for performing self tests.
+Running the command "make check" will perform the self tests.
+
+USAGE
+-----
+
+The release contains test files and example files in the test_suite
+directory.  The 'test2.*' files comprise a complete set of input files
+supplied as an example usage of the evaluation tool.  The following
+command generates two reports, 'example.occ.txt' and
+'example.ali.txt'.  A DET curve is also produced in the example.det.*
+files which can be used with the GNUPLOT program to render the graph.
+The -c option writes intermediate information to so that subsequent
+executions can avoid searching the RTTM file for term occurences.
+
+    perl -I src ./src/STDEval.pl -e test_suite/test2.ecf.xml \
+	-r test_suite/test2.rttm -s test_suite/test2.stdlist.xml \
+	-t test_suite/test2.tlist.xml -A -o example.occ.txt \
+        -a example.ali.txt -d example.det -c example.cache
+
+COPYRIGHT 
+---------
+
+This software was developed at the National Institute of Standards and
+Technology by employees of the Federal Government in the course of their
+official duties.  Pursuant to Title 17 Section 105 of the United States Code
+this software is not subject to copyright protection within the United States
+and is in the public domain. asclite is an experimental system.  NIST assumes
+no responsibility whatsoever for its use by any party.
+
+THIS SOFTWARE IS PROVIDED "AS IS."  With regard to this software, NIST MAKES
+NO EXPRESS OR IMPLIED WARRANTY AS TO ANY MATTER WHATSOEVER, INCLUDING
+MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+
+Note:
+To validate XML files use the following command-line:
+xmllint --schema <xsd-file> <xml-file>

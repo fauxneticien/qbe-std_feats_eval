@@ -1,0 +1,6 @@
+<ecf source_signal_duration="7243.71" version="Scoring ECF derived from expt_06_std_dev06_mand_all_spch_expt_1 version 060725-0834">
+<excerpt audio_filename="audio/eval03/mandarin/bnews/20010209_1330_1400_CTV_MAN_exA.sph" channel="1" tbeg="9.755" dur="29.335" language="mandarin" source_type="bnews"/>
+<excerpt audio_filename="audio/eval03/mandarin/bnews/20010209_1330_1400_CTV_MAN_exA.sph" channel="1" tbeg="41.859" dur="684.801" language="mandarin" source_type="bnews"/>
+<excerpt audio_filename="audio/eval03/mandarin/cts/cf_1312_exA.sph" channel="1" tbeg="0.000" dur="304.780" language="mandarin" source_type="cts"/>
+<excerpt audio_filename="audio/eval03/mandarin/cts/cf_1312_exA.sph" channel="2" tbeg="0.000" dur="304.780" language="mandarin" source_type="cts"/>
+</ecf>

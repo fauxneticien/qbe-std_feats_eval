@@ -24,6 +24,11 @@ if(!dir.exists(file.path(stdeval_path, "STDEval-0.7"))) {
     to   = stdeval_path,
     recursive = TRUE
   )
+  
+  gather_script <- file.copy(
+    from = "scripts/gather_mtwv.R",
+    to   = stdeval_path
+  )
 }
 
 suppressPackageStartupMessages(library(dplyr))

@@ -160,6 +160,17 @@ get_wav_dur <- function(wav_file) {
   round(audio$samples / audio$sample.rate, 2)
 }
 
+# STDEval really does not like non-ASCII characters
+convert_accents <- function(gos_text) {
+  
+  gos_text %>%
+    str_replace_all("è", "iG") %>%
+    str_replace_all("ì", "oG") %>% 
+    str_replace_all("ò", "eG") %>% 
+    str_replace_all("(ö|ö)", "oE")
+  
+}
+
 # Create empty file to append to
 stdeval_cmds_file <- file.path(stdeval_path, "stdeval_commands.txt")
 cat("", file = stdeval_cmds_file)
@@ -177,12 +188,16 @@ output <- list.files(datasets_path) %>%
     ref_durs  <- map_dbl(ref_wavs, get_wav_dur) 
     
     ref_durs_df <- tibble(
-      reference = str_remove(basename(ref_wavs), "\\.wav"),
+      reference = str_remove(basename(ref_wavs), "\\.wav") %>% convert_accents(),
       ref_dur   = ref_durs
     )
     
     labels_csv  <- file.path(datasets_path, dataset, "labels.csv")
     labels_df   <- read_csv(labels_csv, col_types = "cci") %>%
+      mutate(
+        query = convert_accents(query),
+        reference = convert_accents(reference)
+      ) %>% 
       left_join(ref_durs_df, by = "reference")
     
     output_path <- file.path(stdeval_path, dataset)
@@ -201,6 +216,10 @@ output <- list.files(datasets_path) %>%
       walk(function(dtw_csv_path) {
         
         dtw_results_df <- read_csv(dtw_csv_path, col_types = "ccid") %>%
+          mutate(
+            query = convert_accents(query),
+            reference = convert_accents(reference)
+          ) %>% 
           left_join(ref_durs_df, by = "reference")
         
         feats  <- basename(dtw_csv_path) %>% 

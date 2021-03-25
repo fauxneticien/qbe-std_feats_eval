@@ -27,7 +27,7 @@ For every pairing of a .wav file in `queries/` with a .wav file in `references/`
 
 ## System requirements
 
-The instructions here are working as of 2021-03-24, tested on a virtual instance with 24 CPU cores and 64 GB of RAM running Ubuntu 20.04 LTS, Docker Engine 20.10.5, and Docker Compose 1.28.4.
+The instructions here are working as of 2021-03-24, tested on a virtual instance with 24 CPU cores and 64 GB of RAM running Ubuntu 20.04 LTS, Docker Engine 20.10.5, and Docker Compose 1.28.4. See [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/) or [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install/) if you're on one of these platforms. The Docker images have all required interpreters and package dependencies pre-installed (Python, NumPy; R, dplyr; Perl, etc.), so if you choose not to use them, you may need to spend some time configuring your local environment to work with these scripts (e.g. STDEval requires Perl no newer than 5.18.4, and the Python scripts require at least Pandas 1.2.1; see `requirements.txt` and `scripts/Docker/Dockerfile`).
 
 ### Docker installation script
 
@@ -191,7 +191,7 @@ python scripts/feats_to_dtw.py \
 Our system prediction results have been uploaded to Zenodo (see [https://zenodo.org/record/4635587](https://zenodo.org/record/4635587)). To download results use (for example):
 
 ```bash
-# Get link from 'Download' button on 
+# Get link from 'Download' button on https://zenodo.org/record/4635587
 wget https://zenodo.org/record/4635587/files/main_dtw.zip -P tmp/
 
 # Make data/processed directory if necessary
@@ -203,7 +203,7 @@ unzip tmp/main_dtw.zip -d data/processed
 ## 4. Evaluation
 
 We use the Maximum Term Weighted Value (MTWV) as the evaluation metric and use the NIST STDEval tool (included in the repository) to calculate it.
-Briefly stated, with the default costs (false positive: 1, false negative: 10), a MTWV of 0.48 indicates a system that correctly detects 48% of all queries searched, while producing at most 10 false positives for each true positive correctly retrieved [[22](https://www.aclweb.org/anthology/N15-1061/)]. A perfect system detecting all relevant instances with no false positives scores a MTWV of 1 while a system that simply returns nothing scores a MTWV of 0.
+Briefly stated, with the default costs (false positive: 1, false negative: 10), a MTWV of 0.48 indicates a system that correctly detects 48% of all queries searched, while producing at most 10 false positives for each true positive correctly retrieved ([White et al., p. 589](https://www.aclweb.org/anthology/N15-1061/)). A perfect system detecting all relevant instances with no false positives scores a MTWV of 1 while a system that simply returns nothing scores a MTWV of 0.
 
 ### 4.1 STDEval requirements
 
@@ -312,7 +312,10 @@ cd data/processed/STDEval
 # Switch to Perl 5.18.4 (STDEval does not like the default Ubuntu 20.04 Perl version, 5.26)
 
 ## Install perlbrew if necessary
-# wget -O - https://install.perlbrew.pl | bash
+# apt-get install perlbrew
+
+## Install perl-5.18.4 if necessary
+# perlbrew install perl-5.18.4 -n --switch
 
 perlbrew switch perl-5.18.4
 
@@ -350,7 +353,7 @@ The `gather_mtwv.R` script produces the following CSV file, which lists for each
 All input files used in and output returned by the STDEval tool for our main and pilot experiments have been uploaded to Zenodo (see [https://zenodo.org/record/4635587](https://zenodo.org/record/4635587)). To download the data use (for example):
 
 ```bash
-# Get link from 'Download' button on 
+# Get link from 'Download' button on https://zenodo.org/record/4635587
 wget https://zenodo.org/record/4635587/files/main_STDEval.zip -P tmp/
 
 # Make data/processed directory if necessary

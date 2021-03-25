@@ -31,6 +31,13 @@ if(!dir.exists(file.path(stdeval_path, "STDEval-0.7"))) {
   )
 }
 
+missing_pkgs <- setdiff(
+  c("dplyr", "glue", "furrr", "readr", "stringr", "tuneR"),
+  installed.packages()
+)
+
+if(!identical(missing_pkgs, character(0))) { install.packages(missing_pkgs) }
+
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(glue))
 suppressPackageStartupMessages(library(furrr))

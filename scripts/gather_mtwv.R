@@ -1,3 +1,10 @@
+missing_pkgs <- setdiff(
+  c("dplyr", "purrr", "readr", "stringr"),
+  installed.packages()
+)
+
+if(!identical(missing_pkgs, character(0))) { install.packages(missing_pkgs) }
+
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(purrr))
 library(stringr)

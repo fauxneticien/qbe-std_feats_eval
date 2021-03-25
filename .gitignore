@@ -10,3 +10,5 @@ data/processed/*
 data.zip
 uploads
 .Rproj.user
+tmp/*
+!tmp/.gitkeep

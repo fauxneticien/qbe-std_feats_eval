@@ -148,6 +148,20 @@ python scripts/wav_to_w2v2-feats.py \
     --layer _all_
 ```
 
+### 2.3 Fetch features from Zenodo (optional)
+
+Extracted features from all 10 datasets have been uploaded to Zenodo (see [https://zenodo.org/record/4635493](https://zenodo.org/record/4635493) and [https://zenodo.org/record/4635438](https://zenodo.org/record/4635438)). Features for any of the datasets can be downloaded and extracted using (for example):
+
+```bash
+# Get link from 'Download' button on https://zenodo.org/record/4635438
+wget https://zenodo.org/record/4635438/files/wbp-jk.zip -P tmp/
+
+# Make data/interim/features directory if necessary
+# mkdir -p data/interim/features
+
+unzip tmp/wbp-jk.zip -d data/interim/features
+```
+
 ## 3. DTW search
 
 Using features based on a given feature extraction method, we add a corresponding prediction for how likely the query occurs in the reference using an iterative Dynamic Time Warping search, where a window the size of the query is moved along the length of the reference and a DTW-based distance is calculated at each iteration. The final score is `1 - min(dists)`, and is appended to the labels table (example from `data/processed/dtw/mfcc_gos-kdl.csv`)
@@ -158,7 +172,6 @@ Using features based on a given feature extraction method, we add a correspondin
 | ED_aapmoal | HS-en-achterin-stonden-nog-wat-riegen-weckpotten-op-plaank        |   0   |    0.8474109272820750    |
 |  ED_achter  | OV-aapmoal-verschillend-mor-aapmoal-prachteg-van-kleur |   0   |    0.8848427561266850    |
 |  ED_achter  | HS-en-achterin-stonden-nog-wat-riegen-weckpotten-op-plaank        |   1   |    0.855101419144621     |
-
 
 ```
 # If you're not already inside the 'dev' container:
@@ -171,6 +184,20 @@ Using features based on a given feature extraction method, we add a correspondin
 python scripts/feats_to_dtw.py \
     _all_ \
     gos-kdl
+```
+
+### 3.1 Fetch DTW search results from Zenodo (optional)
+
+Our system prediction results have been uploaded to Zenodo (see [https://zenodo.org/record/4635587](https://zenodo.org/record/4635587)). To download results use (for example):
+
+```bash
+# Get link from 'Download' button on 
+wget https://zenodo.org/record/4635587/files/main_dtw.zip -P tmp/
+
+# Make data/processed directory if necessary
+# mkdir -p data/processed
+
+unzip tmp/main_dtw.zip -d data/processed
 ```
 
 ## 4. Evaluation
@@ -309,3 +336,21 @@ The `gather_mtwv.R` script produces the following CSV file, which lists for each
 | ... | ... | ... | ... | ... | ... |
 | gos-kdl | 20210225-Large-0FT_transformer-L24 | 0.2452 | 0.06833 | 0.517 | 0.9389963 |
 
+
+### 4.4 Fetch STDEval results from Zenodo (optional)
+
+All input files used in and output returned by the STDEval tool for our main and pilot experiments have been uploaded to Zenodo (see [https://zenodo.org/record/4635587](https://zenodo.org/record/4635587)). To download the data use (for example):
+
+```bash
+# Get link from 'Download' button on 
+wget https://zenodo.org/record/4635587/files/main_STDEval.zip -P tmp/
+
+# Make data/processed directory if necessary
+# mkdir -p data/processed
+
+unzip tmp/main_STDEval.zip -d data/processed
+```
+
+# 5. Analyses
+
+For our analyses based on the results derived using the procedure described here, see the documents in the [analyses](https://github.com/fauxneticien/qbe-std_feats_eval/tree/master/analyses) folder. The `main-all_mtwv.csv` and `xlsr-all_mtwv.csv` in the `analyses/data` folder are those found in the respective `STDEval` folders available on Zenodo.

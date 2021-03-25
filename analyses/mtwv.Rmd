@@ -1,0 +1,124 @@
+---
+title: "Maximum Term Weighted Value"
+author: "Nay San"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: github_document
+---
+
+## Setup
+
+### R environment
+
+```{r Setup R environment}
+if (!"pacman" %in% installed.packages()) install.packages("pacman")
+
+pacman::p_load(
+  # Use here() to make paths relative from directory containing
+  # 'qbe-std_feats_eval.Rproj' (i.e. project root)
+  ggplot2,
+  ggthemes,
+  here,
+  knitr,
+  purrr,
+  dplyr,
+  readr,
+  stringr,
+  tidyr
+)
+
+source(here("analyses/plot_mtwvs.R"))
+```
+
+## Main experiment MTWVs
+
+```{r Make mtwv_df}
+main_mtwv_df <- read_csv(
+  file = here("analyses/data/main-all_mtwv.csv"),
+  col_types = "ccdddd"
+)
+
+# Show mtwv_df in Markdown document
+head(main_mtwv_df) %>%
+  kable()
+```
+
+### All MTWVs plotted
+
+```{r Main MTWVs plot, fig.width=11, fig.height=4, warning=FALSE, message=FALSE}
+plot_mtwvs(main_mtwv_df)
+```
+
+
+### Reported numbers
+
+#### Baseline performance (MFCC and BNF)
+
+```{r baselines}
+main_mtwv_df %>%
+    mutate(
+      baseline = str_extract(features, "(mfcc|bnf)"),
+      mtwv     = round(mtwv, 2)
+    ) %>%
+    filter(!is.na(baseline)) %>%
+    select(baseline, dataset, mtwv) %>%
+    spread(baseline, mtwv) %>%
+    arrange(desc(mfcc)) %>% 
+    select(dataset, mfcc, bnf) %>% 
+    kable()
+```
+
+##### Baseline means
+
+```{r Baseline means}
+main_mtwv_df %>%
+    filter(str_detect(features, "(mfcc|bnf)")) %>% 
+    group_by(features) %>%
+    summarise(mean_mtwv = round(mean(mtwv), 3)) %>%
+    arrange(mean_mtwv) %>%
+    kable()
+```
+
+
+#### wav2vec 2.0 middle Transformer layers
+
+```{r Middle transformers}
+main_mtwv_df %>%
+    filter(str_detect(features, "transformer-L1[0-4]")) %>% 
+    group_by(features) %>%
+    summarise(mean_mtwv = round(mean(mtwv), 3)) %>%
+    arrange(mean_mtwv) %>%
+    kable()
+```
+
+#### Improvement on wbp-jk and mwf-jm
+
+```{r Worst improvements}
+main_mtwv_df %>%
+  filter(
+    dataset %in% c("wbp-jk", "mwf-jm"),
+    str_detect(features, "(bnf|L11)")
+  ) %>%
+  select(dataset, features, mtwv) %>%
+  mutate(mtwv = round(mtwv, 2)) %>% 
+  spread(features, mtwv) %>%
+  select(dataset, bnf, w2v2_T11 = `20210225-Large-0FT_transformer-L11`) %>%
+  mutate(
+    percent_improvement = round((w2v2_T11 - bnf)/bnf * 100, 0)
+  ) %>%
+  arrange(percent_improvement) %>% 
+  kable()
+```
+#### w2v2-T11 performance, Gronings vs. Australian languages
+
+```{r w2v2-T11}
+main_mtwv_df %>%
+  filter(
+    dataset != "eng-mav",
+    str_detect(features, "L11")
+  ) %>%
+  select(dataset, features, mtwv) %>%
+  mutate(mtwv = round(mtwv, 2)) %>% 
+  arrange(desc(mtwv)) %>%
+  kable()
+```
+

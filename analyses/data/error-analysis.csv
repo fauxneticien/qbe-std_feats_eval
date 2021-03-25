@@ -1,0 +1,120 @@
+qm_transcribed,differences,query_text,match_text,match_start,match_end,dataset,query,reference,ref_dur,ref_text
+aŋe; ane,"[ŋ, n]",ahenge,ahene,0.34,1.17,gbb-lg,ahenge_AR_3cf4f2f2,LGK-CD2-18-30,3.11,ahene      aheneynenke
+aɳe; ane,"[ɳ, n]",aherne,ahene,0.32,0.91,gbb-lg,aherne_AR_3e50bcbb,LGK-CD2-18-25,3.04,ahene      ahenarrenke
+akaɾe; aɾkaɾe,"[_, ɾ]",akarre,arrkarre,1.21,1.86,gbb-lg,akarre_AR_7826d413,LGK-CD1-24-18,2.23,arwele tharrkarre
+ilence; ilenke,"[c, k]",ilentye,ilenke,3.01,3.95,gbb-lg,ilentye_AR_80e95e1b,LGK-CD1-30-01,4.68,Kwere-penhe arntwelke re eylenke
+aŋkenke; aŋkene,"[k, _]",angkenke,angkene,0.69,1.17,gbb-lg,angkenke_AR_12a322f2,LGK-CD1-15-05,1.5,kartarte nge angkene
+ilpakenke; ilpaɾenke,"[k, ɾ]",ilpakenke,ilparrenke,1.47,2.38,gbb-pd,T45-W-30,T24-S-14,2.91,Ngimarrele iterrtyewe ilparrenke arntwe.
+wai; wari,"[_, r]",wai,wari,1.59,1.95,pjt-sw01,wai,SW01-20190531_01-01__226.02,3.46,"munu iitji wiya nganampa kuwari, wituwitu ngaṟanyi"
+juɳma; junma,"[ɳ, n]",jurnma,jun maa,1.99,2.45,wrm-pd,T08-W-3,T11-S-5,5.02,Kurntalalpi ngini ajjul marranta maanjun maanjun karnanganja.
+jukujuku; jukunjuku,"[_, n]",juku juku,jukunju-ku,2.33,2.95,wrm-pd,T09-W-11,T29-S-15,2.97,Ngalanya purluju kari mukku-ku tarn jukunju-ku.
+aterance; aʈerance,"[t, ʈ]",aterrantye,arterrantye,1.28,2.11,gbb-pd,T43-W-3,T40-S-5,2.129,Relhele ilperalke arterrantye.
+kʊtere; kʊʈere,"[t, ʈ]",kwetere,kwertere,2.01,2.65,gbb-pd,T44-W-23,T44-S-24,3.555,Arelhele arawerrnge akakele kwertere arntarrtyerrantye.
+atnteyane; anteyane,"[t, _]",atnteyane,anteyane,1.06,1.89,gbb-pd,T47-W-1,T02-S-10,1.935,Artweye erlkwe anteyane.
+pʊte ; pʊtpale,"[_, tpa]",pwete,pwetpale,1.03,1.39,gbb-pd,T51-W-4,T45-S-30,2.892,Ilpakenke pwetpale atewenhanthe artweyele amerne.
+ɾpʊɾe; ɾpʊɭe,"[ɾ, ɭ]",rrpwere,rrpwerle,1.53,2.12,gbb-pd,T24-W-10,T44-S-5,4.05,"Atyweretye anenke errpwerle, rntere-rntere, arltere tyampe."
+akepe; akeʎa,"[p, ʎ]; [e#, a#]",akepe,akely-a,2.93,3.39,gbb-lg,akepe_AR_226e79e,LGK-CD2-15-09,5.31,Arrknge kwathenhe-penhe weye akely-apeke re aynenyerre.
+akʊɾe; elkʊɾe,"[#a, #e]; [_, l]",akwerre,elkwerre,50.71,51.33,gbb-lg,akwerre_AR_29270d09,LGK-CD2-21-16,56.91,akanpere   anthenayne   mwernenye    aylke   mpwarle     ngkwethe    mwernarte    entwemele    aywerrpe    anwengere    kwene     arrwekele    antengetheye    elkwerre    rlweynteme
+alaɾenke; alaɾeNe,"[k, N]; [k, _]",alarrenke,alarrenhe,0.08,0.65,gbb-lg,alarrenke_AR_39cb7463,LGK-CD1-27-31-d,2.29,Alarrenhe artnwengele aleke akelye
+aŋkece; aɳtece,"[ŋ, ɳ]; [k, t]",angketye,arntetye,1.51,2.05,gbb-lg,angketye_AR_1207cddd,LGK-CD2-21-03,2.09,Atyewenhe elpatherrantye arntetye
+anteTe; aɳtece,"[n, ɳ]; [T, c]",antethe,arntetye,0.95,1.61,gbb-lg,antethe_AR_7555705,LGK-CD2-21-01,1.85,Aleme  ayenge arntetye
+aɭeŋe; aLʊŋe,"[ɭ, L]; ['e, 'ʊ]",arlenge,alhwenge,0.2,0.93,gbb-lg,arlenge_AR_e654a1af,LGK-CD2-01-09,3.08,Alhwenge-theye nte eylenke.
+Napeʈe; Naʈe,"[pe, _]",nhaperte,nharte,4.62,5.34,gbb-lg,nhaperte_AR_9f3a22aa,LGK-CD2-21-13,7.06,Atye ayneweth-anenhe alekele nharte eylelaytenye
+tereTe; terane,"[e, a]; [T, n]",terethe,terane,36.22,36.88,gbb-lg,terethe_AR_6f18e34b,LGK-CD1-36-25,42.94,pwerrantye      aynterantye    angerrantye    aylerantye   etyerrantye     alarrerantye    eyerrantye      arrerantye    arerrantye       rntwerantye    aperrane         ertwerane    angkerrane     ayterane    antyerrane      kengkarrerane
+cʊkere; cekʊre,"['ʊ, 'e]; [e, ʊ]",tywekere,tye kwere,0.44,1.08,gbb-lg,tywekere_AR_d1be7304,LGK-CD1-27-26,2.61,Atye kwere areyerre
+aɭelke; anenke,"[ɭ, n]; [l, n]",arlelke,anenke,1.18,1.73,gbb-pd,T39-W-1,T54-S-6,3.6,Kathipe kwenepe anenke mpwe erlwakake.
+alTeɾance; areɾance,"[l, r]; [T, _]",altherrantye,arerrantye,1.87,2.69,gbb-pd,T45-W-17,T03-S-19,2.71,Atyewaleye atyeyengele kayle mpwarerrantye.
+pʊpe; peNe,"['ʊ, 'e]; [p, N]",pwepe,penhe,2.77,3.36,gbb-pd,T45-W-25,T02-S-13,3.38,"Eltyemwerneyele arntarrtyenke ankeyepenhe, ahepenhe."
+aɳtʊnke; aʈntʊnke,"[ɳ, ʈn]",rntwenke,artntwenke,3.33,3.98,gbb-pd,T45-W-26,T24-S-4,4,Thangkerne arrakwer-akwerele ahakeye nthwerrke artntwenke.
+maɳte; maŋke,"[ɳ, ŋ]; [t, k]",marnte,mangke,1.25,1.84,gbb-pd,T47-W-18,T33-S-8,3.62,Karnaketye kwenemangkerre iperrantye karretele.
+aTeɾe; akʊɾe,"[T, k]; ['e, 'ʊ]",atherre,akwerre,1.73,2.32,gbb-pd,T50-W-2,T02-S-1,3.15,Artnwenge kelye rltente akwerrele entweyane.
+bedbeɾe; ŋadbeɾe,"[b, ŋ]; ['e, 'a]",bedberre,ngadberre,1.01,1.39,gup-wat,bedberre,MIXPRE-005-20180520-GN-tour-trim__406.3,2.74,dja mak ngadberre bu [emergency] ken
+papa; purpa,"['a, 'u]; [p, rp]",papa,purpa,1.36,1.88,pjt-sw01,papa,SW01-20190531_01-02__306.25,18.5,"nyanga paluny tjananya kulypurpa, mai irititja tjuṯa, iriti tjamulu tjana kamilu tjana mai nyanga palulawanuyanku, nyinara, ngaṉtja, ngapaṟi, tjuratja, uwankara, wakati, wangaṉu- wanguṉu"
+pina; kiɲa,"[p, k]; [n, ɲ]",pina,kinya,4.5,5.18,pjt-sw01,pina,SW01-20190528_04-01__70.88,23.76,"tjukurpa paluṟu kakalyalyanya, kakinya, itaṯuṟanya, nyiinyii, munu, pitjina, munu, tjuḻpu kutju ini xxx, patilpanya"
+walpa; waŋka,"[l, ŋ]; [p, k]",walpa,wangka,1.24,1.82,pjt-sw01,walpa,SW01-20190531_01-01__560.34,13.9,"munu culture, wangka, kuḻukuḻuya kuṉpu kanyira wangka irititja tjana, kanyiningi palu nganaṉa kuwari wangka nguṟuritjangka nyinanyi, wangka irititja, tjamuku kamiku tjanam puḻka tjuṯa"
+liɾa; lide,"[ɾ, d]; [a#, e#]",lirra,li de,2.01,2.57,wbp-jk,C15_mouth_lirra,AudioTrack1__3.1,3.76,"Warlu-mipa kalalu-nyanurla erli deiz yarrpurnu,"
+maraji; pariji,"[m, p]; [a, i]",maraji,parri-jji,3.67,4.23,wrm-pd,T08-W-5,T02-S-12,4.25,Kalya kalya kurangi awul nyinta jiparri-jji.
+kana; janta,"[k, j]; [n, nt]",kana,janta,0.96,2.75,wrm-pd,T26-W-15,T31-S-7,4.44,"Karnungu ama janta, rantta awurnu parrkkamanta."
+muna; ŋunta,"[m, ŋ]; [n, nt]",muna,ngunta,1.61,1.99,wrm-pd,T29-W-7,T29-S-13,2.01,Wulunganti ngappa kari ngunta.
+jurkul; yurkuɭ,"[j, y]; [l, ɭ]",jurrkkul,yurrkkurl,0.96,1.48,wrm-pd,T35-W-11,T17-S-11,4.95,"Nyinikirri ama yurrkkurlu kilipartta, mangkkuru warinyi."
+pʊlkance; pʊlkaʈe,"[nc, ʈ]",pwelkantye,pweleke art,0.2,0.9,gbb-lg,pwelkantye_AR_dc9fb46b,LGK-CD2-22-49,4.65,Pweleke artnperr-aytenyerre makwele-warle atnywelp-atnywenyerre
+pulu; muɳu,"[p, m]; [l, ɳ]",pulu,murnu,0,0.77,mwf-jm,pulu,54ea356__600.92,0.79,murnu
+wulu; wutnu,"[l, tn]",wulu,wut-nu,2.38,3.5,mwf-jm,wulu,cdd66fe__440.7,7.87,kardu kuwut-nu tjirdurdi ne ngarra pulitj steishin-ya
+papaʈi; jawaʈi,"[p, j]; [p, w]",paparti,jawarti,0.16,0.59,wrl-mb,C17_brother_paparti,wrl-20200225__842.29,1.8,jawartimarna partimalku
+alkeɾe; aɭkaɭe,"[l, ɭ]; [e, a]; [ɾ, ɭ]",alkere,arlkarle,8.89,9.72,gbb-lg,alkere_AR_7f8edb41,LGK-CD1-33-51,15.9,Arlkarlewatye aynanthe elye altyarrenke aherrke-ketye
+aŋenke; alaŋke,"[ŋ, l]; ['e, 'a]; [n, ŋ]",angenke,alangke,2.31,2.98,gbb-lg,angenke_AR_1da0bac4,LGK-CD2-13-09,4.77,Nhartepe nte enye malangke alepetyemere
+aɭwi; alɔwa,"[ɭ, l]; [i#, a#]",arlweye,alewaty,3.51,4.03,gbb-lg,arlweye_AR_e38e33d8,LGK-CD2-22-41,4.7,Aynanthe arerr-apeynterantyewethe alewatyerrewe
+elɔwe; aLɔre,"[#e, #a]; [l, L]; [w, r]",elwewe,alhewere,17.55,18.31,gbb-lg,elwewe_AR_5c97b892,LGK-CD2-21-04,64.45,"Etak-etake, mwantye    kartarte     alhewere,   alantye,   elpere, awere, apapenye  alele, apertangkwerle   elapenye   artewetntye  alepale   aytnarne"
+enʊnke;	 atnʊnTe,"[#e, #a]; [n, tn]; [k, T]",enwenke,atnwenthe,4.97,5.51,gbb-lg,enwenke_AR_c320fec3,LGK-CD2-17-13,7.09,Erlkwemen-eynengewe katye      alpereyneyayne atnwenthe aynanthe
+etɲenke; aɪtnenke,"[e#, #aɪ]; [ɲ, n];",etnyenke,aytnenke,2.16,2.67,gbb-lg,etnyenke_AR_cc407d45,LGK-CD1-37-03,3.81,Artweye-therrele errtyartele aytnenke atnhelengkwe
+Taɾkaɾe; pelkaɾe,"[T, p]; ['a, 'e]; [ɾ, l]",tharrkarre,pelk-arre,0.83,1.33,gbb-lg,tharrkarre_AR_99a0e5d2,LGK-CD1-30-12,2.33,Atwerrpelk-arrenhe
+ateɾe; aʈaɾa,"[t, ʈ]; ['e, 'a]; [e#, a#]",aterre,artarra,2.64,3.47,gbb-pd,T31-W-6,T03-S-3,3.49,Arlkereye atyeyenge rlengke alpenhe Artarrarle.
+kaɾete; caɾenke,"[k, c]; [t, nk]",karrete,tyarrenke,1.67,2.38,gbb-pd,T33-W-8,T45-S-2,2.4,Elkwemene akertere eltyarrenke.
+aɳanpe; anenke,"[ɳ, n]; ['a, 'e]; [p, k]",arnanpe,anenke,1.88,2.49,gbb-pd,T37-W-12,T33-S-4,2.52,Rlwene perlape atherrkenyele anenke.
+elpaLe; eɾpʊle,"[l, ɾ]; [a, ʊ]; [L, l]",elpalhe,errpwele,0.74,1.43,gbb-pd,T41-W-5,T31-S-4,2.17,Amenge errpwele kelye.
+kuru; waRu,"[k, w]; ['u, 'a]; [r, R]",kuru,waṟu,6.61,7.09,pjt-sw01,kuru,SW01-20190607_02-01__101.5,9.63,"an palu nyangu tjiḻpi kutjup pampa tjiḻpi nyinangi ka palu waṟu tjunanyi xxx wan tu three tjinguṟu four five waṟu, waṟu maṉkurpamaṉkurp palu tjunkupai"
+kuta; kulupa,"[u, ulu]; [t, p]",kuta,kulupa,4.57,5.21,pjt-sw01,kuta,SW01-20190607_03-01__532.26,9,"ka nyaratja tjukurpa, tjitji kulupa, leaves wangkanyi, nyaḻpinya"
+miɖi; maɭu,"['i, 'a]; [ɖ, ɭ]; [i#, u#]",mirdi,marlu,1.83,2.47,wbp-jk,C15_knee_mirdi,AudioTrack9__11.5,3.05,Ngaju-nyangu fathe kantri marlu Jukurrpa.
+muʎu; waɭu,"[m, w]; ['u, 'a]; [ʎ, ɭ]",mulyu,warlu,0,0.42,wbp-jk,C15_nose_mulyu,AudioTrack1__3.1,3.76,"Warlu-mipa kalalu-nyanurla erli deiz yarrpurnu,"
+wuʈu; wunta,"[ʈ, nt]; [u#, a#]",wurttu,wuntta,1.12,1.79,wrm-pd,T04-W-9,T04-S-4,3.71,Ankkul maputantai wuntta warnangka kajji.
+yirŋinji; jirkiji,"[y, j]; [ŋ, k]; [nj, j]",yirrnginji,jirrki-jji,2.09,2.65,wrm-pd,T36-W-7,T18-S-2,2.67,Muntarla ngini anyul nyanjjan wajirrki-jji.
+puʈaŋara; walaŋara,"[p, w]; ['u, 'a]; [ʈ, l]",purtangara,wala ngara,1.49,2.03,wrm-pd,T36-W-8,T31-S-12,2.05,Karnungu ama wanppinyi yuwala ngara.
+wiɭuru; wiʎara,"[ɭ, ʎ]; ['u, 'a]; [u#, a#]",wirluru,wilyarra,1.51,1.99,wrm-pd,T15-W-5,T30-S-30,3,Kartti-ngki ajjul putpul wilyarra punjjan.
+kamaɭ; mampa,"[k, m]",kamarl,mampa,2.19,3.19,mwf-jm,kamarl,a1a4059__20.64,5.28,"kardu prisoner mampa "" mi kantja ngay wurran-gathu """
+akejalTe; acejeŋe,"[k, c]; [a, e]; [lT, ŋ]",akeyalthe,atyeyenge,9.06,9.69,gbb-lg,akeyalthe_AR_7426ada2,LGK-CD1-33-30,12.55,ngkatnkele   kwatnkele     aweleye (atyeyenge)
+antere; anTaʈɔ,"[t, T]; ['e, 'a]; [r, ʈ]; [e#, ɔ#]",antere,anthe artwe,0.52,1.1,gbb-lg,antere_AR_7a3f32d3,LGK-CD2-14-30,5.74,Aynewanthe arntwenhe ngarre apenhe
+aʈenke; atNele,"[ʈ, tN]; [nk, l]",artenke,atnhele,1.12,1.8,gbb-lg,artenke_AR_fba5e160,LGK-CD1-22-12,4.01,Bush-angkwerre atnhelengkwewe arlelke aynanthe apenke.
+elere; aLɔwe,"[#e, #a]; [l, L]; ['e, 'ɔ]; [r, w]",elere,alhewe,2.05,2.83,gbb-lg,elere_AR_641bcf55,LGK-CD2-21-08,3.03,Aterarrenge-wanenye nge alhewere
+elewaʈe; ewaTa,"[l, w]; ['ewa, 'a]; [ʈ, T]; [e#, a#]",elewarte,ew-atha,5.99,6.6,gbb-lg,elewarte_AR_2843efc7,LGK-CD2-18-21,7.16,Atantherre wampere entye     apereyneyayne arlpalhew-athathe
+iteɾce; aTeɾaʈe,"[#i, #a]; [t, T]; [c, ʈ]",iterrtye,atherrarte,0.02,0.78,gbb-lg,iterrtye_AR_9abde085,LGK-CD1-05-02,0.94,atherrarte
+ntɔNe; nteyane,"['ɔ, 'e]; [N, n]",ntewenhe,nteyane,1.21,2.08,gbb-lg,ntewenhe_AR_551061e9,LGK-CD1-36-19,2.75,Aynanthe anteyane
+nTewaʈe; ntempware,"[T, t]; [w, mpw]; [ʈ, r]",nthewarte,nte mpware,0.95,1.56,gbb-lg,nthewarte_AR_ee0965f,LGK-CD2-16-01,2.65,Wante nte mpwarerrantye nhartepe?
+caɲʊŋe; aLɔre,"[ɲ, L]; [ʊ, ɔ]; [ŋ, r]",tyanywenge,alhewere,17.49,18.31,gbb-lg,tyanywenge_AR_2001a3fe,LGK-CD2-21-04,64.45,"Etak-etake, mwantye    kartarte     alhewere,   alantye,   elpere, awere, apapenye  alele, apertangkwerle   elapenye   artewetntye  alepale   aytnarne"
+yekaɪje; akalce,"[ye, a]; ['aɪ, 'a]; [j, c]",yekaye,akaltye,0.38,0.99,gbb-lg,yekaye_AR_6049dc35,LGK-CD2-18-31,3.02,akaltye     akaltyeynenke
+aɳkence; eɾkalce,"[#a, #e]; [e, a]; [n, l]",arnkentye,errkaltye,0,0.69,gbb-pd,T14-W-6,T31-S-1,2.38,Perrkaltye arwengerrpele aynenke.
+pʊlepʊle; paripele,"['ʊ, 'a]; [l, r]; [e, i]; [ʊ, e]",pwele-pwele,paripele,0,0.68,gbb-pd,T17-W-15,T29-S-6,2.28,Paripele anatye aylerrantye.
+iŋke; aʈnte,"[#i, #a]; [ŋ, ʈ]; [k, t]",ingke,artnte,0.81,1.49,gbb-pd,T22-W-6,T18-S-6,3.16,"Arlkerre, artnte arwengerrpele aynterrantye."
+pmikwe; pmwalke,"['i, 'a]",pmikwe,pmwalke,2.2,2.68,gbb-pd,T37-W-10,T29-S-2,3.02,Atnwenthe rrepwerle nyartepe apmwe alkenhe.
+alpare; elpaɪaɭe,"[a, e]; [a, aɪa]; [r, ɭ]",alpare,elpayarle,2.83,3.51,gbb-pd,T37-W-3,T03-S-20,3.53,Aypmenheye atyeyengele apite angerrantye elpayarle.
+ʎəɾə; ɭpɔwə,"[ʎ, ɭ]; [ə, ɔ]; [ɾ, w]",lyere,rlpawe,0.8,1.84,gbb-pd,T43-W-4,T19-S-6,3.41,Kwelparre arlpawe arenye kwerretyetye artnperrane.
+teNepenke; ceyaTenke,"[t, c]; [N, y]; [e, a]; [p, T]",tenhepenke,tweyathenke,0.81,1.88,gbb-pd,T49-W-5,T17-S-4,3.64,Arelhele arntwe yathenke ngentye theye tyampetele.
+lawa; ɲampu,"[l, ɲ]; [w, m]; [a#, u#]",lawa,Nyampu,0.32,1.01,wbp-jk,C15_no_lawa,AudioTrack8__119.6,1.23,"Nyampu,"
+wiriŋaɾi; wariɳi,"['i, 'a]; [ŋ, ɳ]",wiringarri,warinyi,1.45,2.09,wrm-pd,T15-W-3,T17-S-5,3.18,"Jappina ama mangkkuru warinyi, kuyu piliyi."
+kaʈanta; kaʈiŋkia,"[a, i]; [n, ŋ]; [t, k]; [a#, ia#]",kartanta,Kartti-ngki a,0,0.46,wrm-pd,T29-W-11,T30-S-22,4.22,Kartti-ngki ama purtangara¬†ngara jumumuru jukunta purnu.
+karakara; kunapama,"['a, 'u]; [r, n]; [k, p]; [r, m]",karra karra,kunapa ama,0,0.46,wrm-pd,T36-W-1,T36-S-4,2.73,Kunapa ama tarn ngunta¬†mangkaja-jja arttinji.
+kumuluŋ; mamuɭuy,"[k, m]; ['u, 'a]; [l, ɭ]; [ŋ, y]",kumulung,mamurluy,2.94,4.31,mwf-jm,kumulung,4821100__124.61,7.13,kura ngipiliny kanyi-wa kura mamurluy-wurran ngarra palyirr
+pijara; jalama,"[p, j]; ['i, 'a]; [j, l]; [r, m]",pijara,jalama,1.36,2,wrl-mb,C17_ear_pijara,wrl-20191207-02__147.78,9.79,purtu kanyarnangu jalama ngulajin wanganya
+wiɭiya; muɭuɲa,"[w, m]; ['i, 'u]; [i, u]; [y, ɲ]",wirliya,murluɲa,0.4,0.94,wrl-mb,C17_foot_wirliya,wrl-20200219__4541.35,4.26,murlunya wanganirlu yilyingu ngarnu
+paɾa; jawa,"[p, j]; [ɾ, w]",parra,jawa,0.89,1.49,wrl-mb,C17_sun_parra,wrl-20191207-02__673.82,1.51,kularna partima jawarti
+jala; paŋuɭa,"[j, p]; [l, ŋ]; [l, uɭ]",jala,pangurla,0.3,0.85,wrl-mb,C17_today_jala,wrl-20190201__3365.88,1.88,ngapangurla talan manurnu
+kuwaɭa; kulaŋapa,"[w, l]; [ɭ, ŋ]; [_, a]; [_, p]",kuwarla,kula ngapa,0.56,1.14,wrl-mb,C17_wind_kuwarla,wrl-20190201__1748.23,5.29,kula ngapa wanmi palarna panama wirliya
+kʊriŋe; eletNenke,NA,kwereyenge,eletnhenke,2.76,3.26,gbb-lg,kwereyenge_AR_ab9727be,LGK-CD1-27-07,3.948,"Weye re eletnhenke, apmere kwereyengarle."
+ŋuʎa; ama,NA,ngulya warntan,ama warntan,0.53,2.62,wrm-pd,T06-W-3,T31-S-11,4.007,Karnungu ama warntan yuwala-jja.
+tiɳtiɳ; luɳu,NA,tirntirn walpunjjan,lurnu walpunjjan,1.26,4.36,wrm-pd,T28-W-15,T30-S-24,4.413,Kartti-ngki awulurnu walpunjjan.
+aɭʊnTe; eɪlenke,NA,arlwenthe,eylenke,0.36,1.05,gbb-lg,arlwenthe_AR_61480482,LGK-CD1-30-18-b,1.3,atye eylenke
+mpɔwanTe; ntʊyane,NA,mpwewanthe,ntweyane,4.44,5.12,gbb-lg,mpwewanthe_AR_56c4b689,LGK-CD2-13-16-c,5.56,Ayenge elyenge arlkwengele entweyane
+pʊɾkere; eɾpʊɭe,NA,pwerrkere,errpwerle,1.34,2.18,gbb-pd,T15-W-8,T44-S-5,4.05,"Atyweretye anenke errpwerle, rntere-rntere, arltere tyampe."
+pelawe; atnaweɾe,NA,pelawe,atnawerre,0.58,1.29,gbb-pd,T43-W-7,T52-S-9,2.62,Iteye atnawerre alpeyenteyane.
+taltale; anteyane,NA,taltale,anteyane,1.89,2.59,gbb-pd,T51-W-6,T53-S-4,2.62,Aleke pantyele errwelenge altyanteyane.
+kʊne; kewantə,NA,kwene,ke wanta,1.45,1.89,gbb-pd,T54-W-6,T27-S-2,4.14,Arrkarrele aynenke wantakerretye atnkwarengelarre aperrane.
+miɲ; koNda,NA,minj,konhda,0.77,1.05,gup-wat,minj,MIXPRE-009-20180525-TG-tour-trim__377.8,1.47,ngandi-ma-ng ngadberre konhda ka-birri-yo
+yalampuju; palkajuku,NA,yalampuju,palka-juku,5.26,6.18,wbp-jk,C15_there_yalampuju,AudioTrack16__236.1,6.2,"Ngulangka, nyinaja, nyinaja, nyinaja, nyinaja. Ngulangka wantija, ngapa wantija wiri-i-I, warnayarra nyanungu palka-juku."
+yuwayi; yiŋka,NA,yuwayi,yingka,1.31,1.85,wbp-jk,C15_yes_yuwayi,AudioTrack6__15.6,1.87,Yawulyurru nganimpa-nyangu yingka
+punpun; waɳtan,NA,punpun,warntan,1.34,1.94,wrm-pd,T11-W-2,T08-S-9,4.69,Warrikirti-jji aku warntan yukurnukku-ku wirilki-ki.
+yaɭiɭi; kaɳanti,NA,yarlirli,karnanti,2.32,2.78,wrm-pd,T20-W-2,T02-S-11,2.8,Jurttanti ngini ajjinyi karnanti kari karnanti.
+kuluk; Tanam,NA,kuluk,thanam,11.68,12.72,mwf-jm,kuluk,cdd66fe__463.07,12.74,nyinyi-ka kardu trai nam-thanam murriny kuwut thanamngerren murriny yitjparn-nu mu kardu nentharrket-thanam
+pemar;kaŋkaɭ,NA,pemarr,kangkarl,3.21,4.03,mwf-jm,pemarr,cdd66fe__793.15,4.41,nantji mulurn kanamyegarl ngarra thay-gathu kangkarl
+milpa; ŋaɳinya,NA,milpa,ngarninya,3.87,4.41,wrl-mb,C17_eye_milpa,wrl-20190213-01__288.65,4.91,"ngayurna ngarninya, wanganirlu kuyu ngarninya"
+enceɳeŋkwaɭe; aʈecaŋkwaɾe,NA,entyenye-ngkwarle,artetye angkwarre,3.02,4.17,gbb-pd,T34-W-9,T33-S-23,4.27,Rlwene apite elpaye errwele anteyane kape artetye angkwarre.
+milkarnaja; pirkaɳinta,NA,milkarnaja,pirrkarninta,1.32,2.11,wrm-pd,T04-W-5,T29-S-19,4.03,Ngawanja ngara ajjul pirrkarninta wartilykirri.
+manajijaɭpar; manantakaɭkur,NA,manaji jarlpparr,mananta karlkkurr,2.34,4.09,wrm-pd,T19-W-15,T09-S-9,6.07,Kuna-jirrnginjaningi-jji aku mananta karlkkurr-ku jajji-ki.
+pankaʈi; kaɳuɾa,NA,pankarti,karnurra,5.28,6.08,wrl-mb,C17_comehere_pankarti,wrl-20200220__555.15,6.14,jirrimarlu yawirrijarrarlu ngapapala ngukarnurra
+pululu; kaɳanti,NA,pululu,karnanti,0.62,0.96,wrm-pd,T01-W-1,T02-S-5,4.31,"Ajjinyi karnanti kari kukkaji kapi paparti ngini, awulajji ngamirni."
+munakupuja; maɭakiʎirka,NA,muna kupuja,marla kilyirr ka,1.09,2.21,wrm-pd,T29-W-9,T04-S-3,2.7,Ankkul maputanta marla kilyirr kajji.
+kurapatha; pupŋaɾaTay,NA,kura patha,pup ngarra thay,2.29,3.18,mwf-jm,kura_patha,db076bf__233.73,3.96,ku kakalak wurranmardapup ngarra thay kangkarl
+ɾpɔɾalkəNə; aʈijeɭkʊŋə,NA,rrpwere alkenhe,Artweye erlkwenge,0.04,0.97,gbb-pd,T24-W-5,T42-S-1,2.82,Artweye erlkwenge aherre atnhwerte alperinenke.
+luʎkuluʎku; wuɳumukaʈi,NA,lulykku lulykku,wurnu mukkarti,0.79,1.74,wrm-pd,T13-W-2,T30-S-14,2.18,Kartti-ngki awurnu mukkarti jarrpanta.
+kalakalak; maypanakura,NA,kalakkalak,may pana kura,0.34,1.74,mwf-jm,kalakkalak,3381cdc__3,5.65,mamay pana kura pananthudhutj-ya ngarra swimming pool-ya nantji chlorine-wanku
+picancacara; kulca,NA,pitjantjatjara,culture,0.28,1.06,pjt-sw01,pitjantjatjara,SW01-20190531_01-01__560.34,13.9,"munu culture, wangka, kuḻukuḻuya kuṉpu kanyira wangka irititja tjana, kanyiningi palu nganaṉa kuwari wangka nguṟuritjangka nyinanyi, wangka irititja, tjamuku kamiku tjanam puḻka tjuṯa"
+mikileɳ; kaɖukigayper,NA,mi kilern,kardu kigay perr,0,1.25,mwf-jm,mi_kilern,bd108b9__290.26,2.05,kardu kigay perrkenku
+atNʊʈalperinenke; akʊɾkineŋe,NA,atnhwerte alperinenke,akwerrke inenge,0,1.82,gbb-pd,T42-W-1,T19-S-2,1.85,Artnwere akwerrke inenge.

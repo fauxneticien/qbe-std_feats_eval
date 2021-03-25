@@ -1,0 +1,151 @@
+---
+title: "Error analysis"
+author: "Nay San"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: github_document
+---
+
+## About 
+
+## Setup
+
+### R environment
+
+```{r Setup R environment}
+if (!"pacman" %in% installed.packages()) install.packages("pacman")
+
+pacman::p_load(
+  # Use here() to make paths relative from directory containing
+  # 'qbe-std_feats_eval.Rproj' (i.e. project root)
+  dplyr,
+  here,
+  knitr,
+  purrr,
+  readr,
+  stringr,
+  tidyr
+)
+```
+
+### Data
+
+#### Get list of 'unretrievable' queries
+
+We define a query as 'unretrievable' if the there are no true matches for that query in the ranked results returned by the top performing system using features extracted from the wav2vec 2.0 Transformer layer 11.
+The search results for each of the Australian language datasets are provided for convenience in the `analyses/data` directory (e.g. `analyses/data/20210225-Large-0FT_transformer-L11_wrl-mb.csv`).
+
+```{r Get unretrievables}
+T11_results <- here("analyses/data") %>%
+  list.files(
+    pattern = "20210225-Large-0FT_transformer-L11",
+    full.names = TRUE
+  ) %>%
+  map_df(function(csv_path) {
+    
+    csv_file <- basename(csv_path)
+    dataset  <- str_extract(csv_file, "L11_.*?\\.csv$") %>%
+      str_remove("L11_") %>%
+      str_remove("\\.csv")
+    
+    read_csv(csv_path, col_types = "ccid") %>%
+      mutate(dataset = dataset)
+    
+  })
+
+unretrievable_qs <- T11_results %>% group_by(query) %>%
+    slice_max(order_by = prediction, n = 5) %>%
+    group_by(query) %>%
+    filter(!1 %in% label) %>%
+    slice_max(order_by = prediction, n = 1) %>% 
+    arrange(dataset, query, reference)
+
+head(unretrievable_qs) %>%
+  kable()
+```
+
+#### Transcribe and annotate difference between query and top match
+
+Using the list of unretrievable queries and their top match listed above, we re-ran the DTW search for each pair, noting down the time frame at which the minimal distance occurred, and examining the source wav file of the reference at that time range. In consultation with the ground truth texts, we then transcribed the query and the matched region, and the differences between the query and the match.
+These annotations are shown in the table below.
+
+```{r Error table}
+errors <- read_csv(
+    file = "data/error-analysis.csv",
+    col_types = "ccccddcccdc"
+  )
+
+kable(head(errors, 5))
+```
+
+### Statistics
+
+In this section, we derive the statistics reported in the paper.
+
+#### Total number of unretrievable queries
+
+```{r Totals}
+errors %>%
+  nrow()
+```
+
+#### Number of differences
+
+```{r}
+diffs <- errors %>%
+    separate_rows(differences, sep = "; ") %>%
+    # Filter out uninterpretable errors (too many differences)
+    filter(!is.na(differences))
+
+diffs %>%
+    group_by(dataset, query) %>%
+    tally(name = "n_differences") %>%
+    group_by(n_differences) %>%
+    tally(name = "count") %>%
+    ungroup %>% 
+    mutate(
+      totals  = sum(count),
+      percent = count/totals * 100
+    ) %>% 
+    kable()
+```
+
+#### Substitutions
+
+```{r Substitutions}
+subs <- diffs %>%
+    filter(!str_detect(differences, "(\\[_|_\\])")) %>% # Filter out insertions and deletions
+    mutate(
+        sub_type = ifelse(str_detect(differences, "(a|e|ə|i|ɪ|ɔ|u|ʊ)"), "Vowel", "Consonant"),
+        stress = ifelse(str_detect(differences, "'"), "Stressed", "Unstressed")
+    ) 
+```
+
+##### Consonantal substitutions
+
+```{r Consonantal substitutions}
+subs %>% 
+    group_by(sub_type, stress) %>%
+    tally(name = "count") %>%
+    ungroup %>% 
+    mutate(
+      totals  = sum(count),
+      percent = count/totals * 100
+    ) %>% 
+    kable()
+```
+
+##### Vocalic substitutions
+
+```{r Vocalic substitutions}
+subs %>% 
+    filter(sub_type == "Vowel") %>% 
+    group_by(stress) %>%
+    tally(name = "count") %>%
+    ungroup %>% 
+    mutate(
+      totals  = sum(count),
+      percent = count/totals * 100
+    ) %>% 
+    kable()
+```
+

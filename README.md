@@ -51,7 +51,7 @@ The directory structure for this project roughly follows the [Cookiecutter Data 
 
 ## Experiment data and artefacts
 
-With the exception of raw audio and texts from the Australian language documentation projects (for which we do not have permission to release openly) and those from the [Mavir corpus](http://www.lllf.uam.es/ING/CorpusMavir.html) (which can be obtained from the original distributor, subject to signing their licence agreement), all other data used in and generated the experiments are available on Zenodo (see [https://zenodo.org/communities/qbe-std_feats_eval](). These are:
+With the exception of raw audio and texts from the Australian language documentation projects (for which we do not have permission to release openly) and those from the [Mavir corpus](http://www.lllf.uam.es/ING/CorpusMavir.html) (which can be obtained from the original distributor, subject to signing their licence agreement), all other data used in and generated the experiments are available on Zenodo (see [https://zenodo.org/communities/qbe-std_feats_eval]()). These are:
 
 - Dataset: Gronings [https://zenodo.org/record/4634878](https://zenodo.org/record/4634878)
 - Model checkpoints: [https://zenodo.org/record/4632537](https://zenodo.org/record/4632537)

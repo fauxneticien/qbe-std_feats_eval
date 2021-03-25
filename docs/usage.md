@@ -12,18 +12,18 @@ gos-kdl/
 ...
 |-- references/
 |--|-- OV-aapmoal-verschillend-mor-aapmoal-prachteg-van-kleur.wav
-|--|-- HS-en-achterin-stonden-nog-wat-riegen-weckpotten-op-plaank
+|--|-- RB-de-gruinteboer-staait-mit-n-blaauw-schoet-veur-achter-de-teunbaank.wav
 ...
 ```
 
-For every pairing of a .wav file in `queries/` with a .waf file in `references/`, the `labels.csv` file contains the ground truth of whether the given query occurs in the reference. We expect the wav files to be 16 kHz mono 16-bit WAV PCM.
+For every pairing of a .wav file in `queries/` with a .wav file in `references/`, the `labels.csv` file contains the ground truth of whether the given query occurs in the reference. We expect the wav files to be 16 kHz mono 16-bit WAV PCM.
 
 | query |        reference      | label |
 |-------|-----------------------|-------|
 | ED_aapmoal | OV-aapmoal-verschillend-mor-<b>aapmoal</b>-prachteg-van-kleur |   1   |
-| ED_aapmoal | HS-en-achterin-stonden-nog-wat-riegen-weckpotten-op-plaank        |   0   |
+| ED_aapmoal | RB-de-gruinteboer-staait-mit-n-blaauw-schoet-veur-achter-de-teunbaank        |   0   |
 |  ED_achter  | OV-aapmoal-verschillend-mor-aapmoal-prachteg-van-kleur |   0   |
-|  ED_achter  | HS-en-<b>achter</b>in-stonden-nog-wat-riegen-weckpotten-op-plaank        |   1   |
+|  ED_achter  | RB-de-gruinteboer-staait-mit-n-blaauw-schoet-veur-<b>achter</b>-de-teunbaank        |   1   |
 
 ## System requirements
 
@@ -139,7 +139,7 @@ docker-compose run --rm dev
 # Extract features from all stages/layers (encoder, quantizer, transformer 1-24)
 # of wav2vec 2.0 model using model weights from specified checkpoint file.
 #
-# For help, run: python scripts/wav_to_shennong-feats.py -h
+# For help, run: python scripts/wav_to_w2v2-feats.py -h
 
 python scripts/wav_to_w2v2-feats.py \
     data/raw/model_checkpoints/20210225-Large-0FT.pt \
@@ -168,10 +168,10 @@ Using features based on a given feature extraction method, we add a correspondin
 
 | query |        reference      | label | prediction |
 |-------|-----------------------|-------|------------|
-| ED_aapmoal | OV-aapmoal-verschillend-mor-aapmoal-prachteg-van-kleur |   1   |    0.908723813004581    |
-| ED_aapmoal | HS-en-achterin-stonden-nog-wat-riegen-weckpotten-op-plaank        |   0   |    0.8474109272820750    |
-|  ED_achter  | OV-aapmoal-verschillend-mor-aapmoal-prachteg-van-kleur |   0   |    0.8848427561266850    |
-|  ED_achter  | HS-en-achterin-stonden-nog-wat-riegen-weckpotten-op-plaank        |   1   |    0.855101419144621     |
+| ED_aapmoal | OV-aapmoal-verschillend-mor-aapmoal-prachteg-van-kleur |   1   |    0.9179029429624552    |
+| ED_aapmoal | RB-de-gruinteboer-staait-mit-n-blaauw-schoet-veur-achter-de-teunbaank        |   0   |    0.8537919659746750    |
+|  ED_achter  | OV-aapmoal-verschillend-mor-aapmoal-prachteg-van-kleur |   0   |    0.8851410753164508    |
+|  ED_achter  | RB-de-gruinteboer-staait-mit-n-blaauw-schoet-veur-achter-de-teunbaank        |   1   |    0.8891430558060820     |
 
 ```
 # If you're not already inside the 'dev' container:
@@ -179,7 +179,7 @@ Using features based on a given feature extraction method, we add a correspondin
 
 # Run DTW search for each feature extraction method on gos-kdl
 #
-# For help, run scripts/feats_to_dtw.py -h
+# For help, run: python scripts/feats_to_dtw.py -h
 
 python scripts/feats_to_dtw.py \
     _all_ \
@@ -203,7 +203,7 @@ unzip tmp/main_dtw.zip -d data/processed
 ## 4. Evaluation
 
 We use the Maximum Term Weighted Value (MTWV) as the evaluation metric and use the NIST STDEval tool (included in the repository) to calculate it.
-Briefly stated, with the default costs (false positive: 1, false negative: 10), a MTWV of 0.48 indicates a system that correctly detects 48% of all queries searched, while producing at most 10 false positives for each true positive correctly retrieved [22]. A perfect system detecting all relevant instances with no false positives scores a MTWV of 1 while a system that simply returns nothing scores a MTWV of 0.
+Briefly stated, with the default costs (false positive: 1, false negative: 10), a MTWV of 0.48 indicates a system that correctly detects 48% of all queries searched, while producing at most 10 false positives for each true positive correctly retrieved [[22](https://www.aclweb.org/anthology/N15-1061/)]. A perfect system detecting all relevant instances with no false positives scores a MTWV of 1 while a system that simply returns nothing scores a MTWV of 0.
 
 ### 4.1 STDEval requirements
 
@@ -310,9 +310,17 @@ The `stdeval_commands.txt` file contains all the commands needed to run the STDE
 cd data/processed/STDEval
 
 # Switch to Perl 5.18.4 (STDEval does not like the default Ubuntu 20.04 Perl version, 5.26)
+
+## Install perlbrew if necessary
+# wget -O - https://install.perlbrew.pl | bash
+
 perlbrew switch perl-5.18.4
 
 # Run all commands in `stdeval_commands.txt` in parallel
+
+## Install parallel if necessary
+# apt-get install parallel
+
 parallel --verbose --progress < stdeval_commands.txt
 
 # Collect MTWVs from all score.mtwv.txt files
@@ -330,11 +338,11 @@ The `gather_mtwv.R` script produces the following CSV file, which lists for each
 
 | dataset |        features      | mtwv | p_fa | p_miss | desc_score |
 |-------|-----------------------|-------|------------|----|----|
-| gos-kdl | bnf | 0.3695 | 0.04305 | 0.48 | 0.93797675 |
-| gos-kdl | mfcc |   0.3695 | 0.04305 | 0.48 | 0.93797675 |
-| gos-kdl | 20210225-Large-0FT_encoder | 0.4467 | 0.07503 | 0.292 | 0.87028207 |
+| gos-kdl | bnf | 0.3773 | 0.04177 | 0.480 | 0.87986987 |
+| gos-kdl | mfcc |   0.3657 | 0.06727 | 0.400 | 0.93886236 |
+| gos-kdl | 20210225-Large-0FT_encoder | 0.4495 | 0.07524 | 0.288 | 0.87028207 |
 | ... | ... | ... | ... | ... | ... |
-| gos-kdl | 20210225-Large-0FT_transformer-L24 | 0.2452 | 0.06833 | 0.517 | 0.9389963 |
+| gos-kdl | 20210225-Large-0FT_transformer-L24 | 0.2423 | 0.07094 | 0.510 | 0.9389963 |
 
 
 ### 4.4 Fetch STDEval results from Zenodo (optional)

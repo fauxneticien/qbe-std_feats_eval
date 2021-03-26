@@ -59,6 +59,7 @@ With the exception of raw audio and texts from the Australian language documenta
 	- Main experiments, MFCC, BNF and wav2vec 2.0 LibriSpeech 960h features (limited to 50 GB per archive by Zenodo):
 		- Archive I (eng-mav, gbb-lg, wbp-jk, and wrl-mb datasets): [https://zenodo.org/record/4635438](https://zenodo.org/record/4635438)
 		- Archive II (gbb-pd, gos-kdl, gup-wat, mwf-jm, pjt-sw01, and wrm-pd): [https://zenodo.org/record/4635493](https://zenodo.org/record/4635493)
+		- Archive III (w2v2-T11 only; all datasets): [https://zenodo.org/record/4638385](https://zenodo.org/record/4638385)
 	- Pilot experiments, wav2vec 2.0 XLSR-53 features (limited to 50 GB per archive by Zenodo):
 		- Archive I (eng-mav, gbb-lg, wbp-jk, and wrl-mb datasets): [https://zenodo.org/record/4638239](https://zenodo.org/record/4638239)
 		- Archive II (gbb-pd, gos-kdl, gup-wat, mwf-jm, pjt-sw01, and wrm-pd): [https://zenodo.org/record/4638279](https://zenodo.org/record/4638279)

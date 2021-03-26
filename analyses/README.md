@@ -1,0 +1,29 @@
+# Analyses
+
+- Pilot analysis using multilingual wav2vec 2.0 model (last paragraph before section 3.1 from paper)
+  - [xlsr-pilot.md](https://github.com/fauxneticien/qbe-std_feats_eval/blob/master/analyses/xlsr-pilot.md): Markdown file viewable on GitHub
+  - xlsr-pilot.Rmd: RMarkdown file used to generate Markdown file
+  - generate_w2v2-distance_plots.py: Script used to generate comparative figures (monolingual vs multilingual)
+  - Data used:
+    - data/xlsr-all_mtwv.csv
+    - data/hello.wav
+    - data/goodbye-hello-goodbye.wav
+- Analyses relating to Maximum Term Weighted Values (Figure 1 and first 3 paragraphs of section 4 from paper)
+  - [mtwv.md](https://github.com/fauxneticien/qbe-std_feats_eval/blob/master/analyses/mtwv.md): Markdown file viewable on GitHub
+  - mtwv.Rmd: RMarkdown file used to generate Markdown file
+  - plot_mtwvs.R: R function to generate Figure 1 from paper
+  - Data used:
+    - data/main-all_mtwv.csv
+- Phonologically-based error analysis (last 4 paragraphs of section 4 from paper)
+  - [error-analysis.md](https://github.com/fauxneticien/qbe-std_feats_eval/blob/master/analyses/error-analysis.md): Markdown file viewable on GitHub
+  - error-analysis.Rmd: RMarkdown file used to generate Markdown file
+  - Data used:
+    - data/error-analysis.csv
+    - data/20210225-Large-0FT_transformer-L11_wrm-pd.csv
+    - data/20210225-Large-0FT_transformer-L11_gbb-lg.csv
+    - data/20210225-Large-0FT_transformer-L11_gbb-pd.csv
+    - data/20210225-Large-0FT_transformer-L11_gup-wat.csv
+    - data/20210225-Large-0FT_transformer-L11_mwf-jm.csv
+    - data/20210225-Large-0FT_transformer-L11_pjt-sw01.csv
+    - data/20210225-Large-0FT_transformer-L11_wbp-jk.csv
+    - data/20210225-Large-0FT_transformer-L11_wrl-mb.csv

@@ -11,7 +11,7 @@ A walkthrough of the entire experiment pipeline can be found in [scripts/README.
       title={Leveraging neural representations for facilitating access to untranscribed speech from endangered languages}, 
       author={San, Nay and Bartelds, Martijn and Browne, Mitchell and Clifford, Lily and Gibson, Fiona and Mansfield, John and Nash, David and Simpson, Jane and Turpin, Myfany and Vollmer, Maria and Wilmoth, Sasha and Jurafsky, Dan},
       year={2021},
-      eprint={--update--},
+      eprint={2103.14583},
       archivePrefix={arXiv},
       primaryClass={cs.CL}
 }

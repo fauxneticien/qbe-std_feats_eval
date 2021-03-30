@@ -13,17 +13,23 @@ services:
         stdin_open: true
         tty: true
 
-    prod:
+    dev_gpu:
         image: "fauxneticien/qbe-std_feats_eval"
         volumes:
-            # For 'production' use,
-            # mount only data directory
-            - ${PWD}/data:/home/qbe-std_feats_eval/data
+            # For development use, 
+            # mount entire repo, including scripts
+            - ${PWD}:/home/qbe-std_feats_eval
         working_dir: /home/qbe-std_feats_eval
         entrypoint:
             - /bin/bash
         stdin_open: true
         tty: true
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - capabilities: [gpu]
+                        driver: nvidia
 
     shennong:
         image: "fauxneticien/shennong"

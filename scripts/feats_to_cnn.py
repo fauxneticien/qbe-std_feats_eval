@@ -161,7 +161,7 @@ for dataset in datasets:
                 outputs = cnn_model(dists)
 
                 # Update predictions of relevant rows with outputs
-                labels_df.at[batch_data['index'], 'prediction'] = outputs
+                labels_df.at[batch_data['index'], 'prediction'] = outputs.cpu().detach()
 
         Path(args.output_dir).mkdir(parents=True, exist_ok=True)
         output_file = os.path.join(args.output_dir, "{}_{}.csv".format(features, dataset))

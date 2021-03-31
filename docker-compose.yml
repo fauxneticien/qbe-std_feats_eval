@@ -18,7 +18,7 @@ services:
         volumes:
             # For development use, 
             # mount entire repo, including scripts
-            - ${PWD}:/home/qbe-std_feats_eval
+            - ~/qbe-std_feats_eval:/home/qbe-std_feats_eval
         working_dir: /home/qbe-std_feats_eval
         entrypoint:
             - /bin/bash
@@ -29,7 +29,7 @@ services:
                 reservations:
                     devices:
                         - capabilities: [gpu]
-                        driver: nvidia
+                          driver: nvidia
 
     shennong:
         image: "fauxneticien/shennong"

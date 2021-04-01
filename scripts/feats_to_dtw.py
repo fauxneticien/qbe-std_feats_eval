@@ -17,6 +17,8 @@ parser = argparse.ArgumentParser(
 parser.add_argument('features', help='features to use in DTW computations, use _all_ to iterate over all')
 parser.add_argument('dataset', help = 'name of dataset, use _all_ to iterate over all')
 
+parser.add_argument('--win_step', default=2, help = "step size for Segmental DTW window")
+
 parser.add_argument('--feats_dir',  default='data/interim/features', help = "directory for features")
 parser.add_argument('--datasets_dir', default='data/raw/datasets', help = "directory for raw datasets and labels files")
 parser.add_argument('--output_dir',  default='data/processed/dtw', help = "directory for dtw output, will create if it does not exist")
@@ -94,7 +96,7 @@ for dataset in datasets:
             window_size      = int(query_length * max_match_ratio)
             last_segment_end = int(reference_length - (min_match_ratio * query_length))
 
-            for r_i in range(last_segment_end):
+            for r_i in range(0, last_segment_end, int(args.win_step)):
                 
                 segment_start = r_i
                 segment_end   = min(r_i + window_size, reference_length)

@@ -63,7 +63,9 @@ def extract_w2v2_feats(wav_data, stage, layer = None, model = model):
         x_conv = x_conv.transpose(1, 2)
         x += x_conv
 
-        x = model.encoder.layer_norm(x)
+        if not model.encoder.layer_norm_first:
+            x = model.encoder.layer_norm(x)
+            
         x = x.transpose(0, 1)
 
         for i, t_layer in enumerate(model.encoder.layers):

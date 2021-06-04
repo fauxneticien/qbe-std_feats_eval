@@ -220,6 +220,7 @@ output <- list.files(datasets_path) %>%
     make_rttm_file(labels_df, rttm_file)
     
     list.files(dtw_csvs_path, pattern = dataset, full.names = TRUE) %>%
+      keep(~ str_detect(., "\\.csv$")) %>% 
       walk(function(dtw_csv_path) {
         
         dtw_results_df <- read_csv(dtw_csv_path, col_types = "ccid") %>%

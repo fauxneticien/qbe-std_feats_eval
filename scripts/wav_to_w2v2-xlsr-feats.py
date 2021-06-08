@@ -7,6 +7,7 @@ import pandas as pd
 
 from argparse import ArgumentParser
 from glob import glob
+from transformers import logging
 from transformers.models.wav2vec2 import Wav2Vec2Model
 from pathlib import Path
 from tqdm import tqdm
@@ -41,8 +42,11 @@ parser.add_argument('--queries_dir',  default='queries', help = 'directory with 
 parser.add_argument('--references_dir',  default='references', help = 'directory with .wav files for references')
 
 parser.add_argument('--model', default='wav2vec2-large-xlsr-53')
+parser.add_argument('--hft_logging', default=40, help='HuggingFace Transformers verbosity level (40 = errors, 30 = warnings, 20 = info, 10 = debug)')
+
 args = parser.parse_args()
 
+logging.set_verbosity(args.hft_logging)
 
 def load_wav2vec2_featurizer(model, layer=None):
     """
@@ -86,7 +90,6 @@ def load_wav2vec2_featurizer(model, layer=None):
 
     return _featurize
 
-
 def featurize(wav_paths, layer, stage, dataset):
     '''
     Computes w2v2 from the queries and references files
@@ -104,40 +107,26 @@ def featurize(wav_paths, layer, stage, dataset):
         # Extract features
         hidden_states = featurizer(wav_path)
         fnames_list.append(wav_path.split('/')[-1][:-4])
-        print(hidden_states.shape)
+        # print(hidden_states.shape)
         feats_list.append(hidden_states)
 
-    query_feats_df = pd.DataFrame({
+    feats_df = pd.DataFrame({
         'filename' : fnames_list,
         'features' : feats_list
     })
 
-    if layer == -2:
-        print(f'Computing {proc_set} features of the encoder completed!')
-
-        ds_feat_output_dir = args.feats_dir + '/' +  args.model + '-' + stage + '/' + dataset
-        Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
-
-        with open(ds_feat_output_dir + '/' + proc_set + '.pickle', 'wb') as handle:
-            pickle.dump(query_feats_df, handle)
-
-    elif layer == -1:
-        print(f'Computing {proc_set} features of the quantizer completed!')
-        
-        ds_feat_output_dir = args.feats_dir + '/' +  args.model + '-' + stage + '/' + dataset
-        Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
-
-        with open(ds_feat_output_dir + '/' + proc_set + '.pickle', 'wb') as handle:
-            pickle.dump(query_feats_df, handle)
+    if layer < 0:
+        # e.g. wav2vec2-large-xlsr-53_encoder or # wav2vec2-large-xlsr-53_quantizer
+        stage_name = "{}_{}".format(args.model, stage)
     else:
-        print(f'Computing {proc_set} features layer {layer} completed!')
+        # e.g. wav2vec2-large-xlsr-53_transformer-L01
+        stage_name = "{}_{}-L{}".format(args.model, stage, str(layer).zfill(2))
 
-        ds_feat_output_dir = args.feats_dir + '/' +  args.model + '-' + stage + '_L' + str(layer) + '/' + dataset
-        Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
-
-        with open(ds_feat_output_dir + '/' + proc_set + '.pickle', 'wb') as handle:
-            pickle.dump(query_feats_df, handle)
-
+    ds_feat_output_dir = os.path.join(args.feats_dir, dataset, stage_name)
+    Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
+    
+    with open(ds_feat_output_dir + '/' + proc_set + '.pickle', 'wb') as handle:
+        pickle.dump(feats_df, handle)
 
 def main():
     datasets = [ os.path.basename(p) for p in glob.glob(os.path.join(args.datasets_dir, '*')) ] if args.dataset == '_all_' else [ args.dataset ]
@@ -145,43 +134,33 @@ def main():
     assert args.stage in ['encoder', 'quantizer', 'transformer', '_all_'], 'Unknown wav2vec 2.0 stage specified: {}'.format(args.stage)
     stages = [ 'encoder', 'quantizer', 'transformer' ] if args.stage == '_all_' else [ args.stage ]
 
-    if 'transformer' in stages:
-        layers = list(range(1, 25)) if args.layer == '_all_' else [ int(args.layer) ]
-
     for dataset in datasets:
 
         for stage in stages:
             
             # Check wav files in input directory
             queries_wav_paths = glob(os.path.join(args.datasets_dir, dataset, args.queries_dir) + '/*.wav')
-            if len(queries_wav_paths) == 0:
-                print(f'No wav files found in {args.input_dir}')
-                exit(1)
-            print(f'Featurizing {len(queries_wav_paths):,} query wav files')
+            assert len(queries_wav_paths) > 0, f'No wav files found in {args.input_dir}'
 
             refs_wav_paths = glob(os.path.join(args.datasets_dir, dataset, args.references_dir) + '/*.wav')
-            if len(refs_wav_paths) == 0:
-                print(f'No wav files found in {args.input_dir}')
-                exit(1)
-            print(f'Featurizing {len(refs_wav_paths):,} reference wav files')
+            assert len(refs_wav_paths) > 0, f'No wav files found in {args.input_dir}'
 
             if stage == 'encoder':
-                layer = -2
-                featurize(queries_wav_paths, layer, stage, dataset)
-                featurize(refs_wav_paths, layer, stage, dataset)
+                layers = [-2]
 
             if stage == 'quantizer':
-                layer = -1
-                featurize(queries_wav_paths, layer, stage, dataset)
-                featurize(refs_wav_paths, layer, stage, dataset)
+                layers = [-1]
             
             if stage == 'transformer':
+                if args.layer == '_all_':
+                    layers = list(range(1, 25))
+                else:
+                    assert int(args.layer) > 0 or int(args.layer) <= 24, f'Specified transformer layer {args.layer} out of range'
+                    layers = [ int(args.layer) ]
 
-                for layer in layers:
-                    assert layer > 0 or layer <= 24, 'Specified transformer layer out of range'
-
-                    featurize(queries_wav_paths, layer, stage, dataset)
-                    featurize(refs_wav_paths, layer, stage, dataset)             
+            for layer in layers:
+                featurize(queries_wav_paths, layer, stage, dataset)
+                featurize(refs_wav_paths, layer, stage, dataset)             
 
 if __name__ == '__main__':
     main()                  

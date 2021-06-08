@@ -2,7 +2,8 @@ FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime
 
 RUN apt-get update
 RUN apt-get install -y git \
-    g++
+    g++ \
+    libsndfile1
 
 WORKDIR /home
 RUN git clone https://github.com/fauxneticien/qbe-std_feats_eval.git

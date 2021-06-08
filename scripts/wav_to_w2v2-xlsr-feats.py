@@ -17,7 +17,7 @@ KNOWN_MODELS = {
     'wav2vec2-base': 'facebook/wav2vec2-base',
     'wav2vec2-large': 'facebook/wav2vec2-large',
     'wav2vec2-large-lv60': 'facebook/wav2vec2-large-lv60',
-    'wav2vec2-large-xlsr-53': 'facebook/wav2vec2-large-xlsr-53',
+    'wav2vec2-large-xlsr-53': {'name' : 'facebook/wav2vec2-large-xlsr-53', 'revision' : '8e86806e53a4df405405f5c854682c785ae271da' },
     # Fine-tuned
     'wav2vec2-base-960h': 'facebook/wav2vec2-base-960h',
     'wav2vec2-large-960h': 'facebook/wav2vec2-large-960h',
@@ -55,11 +55,19 @@ def load_wav2vec2_featurizer(model, layer=None):
     Otherwise, only returns the specified layer representations.
     """
 
-    model_name_or_path = KNOWN_MODELS.get(model, model)
+    model_spec = KNOWN_MODELS.get(model, model)
     model_kwargs = {}
     if layer is not None:
         model_kwargs["num_hidden_layers"] = layer if layer > 0 else 0
+
+    if type(model_spec) is dict:
+        model_name_or_path       = model_spec['name']
+        model_kwargs['revision'] = model_spec['revision']
+    else:
+        model_name_or_path = model_spec
+    
     model = Wav2Vec2Model.from_pretrained(model_name_or_path, **model_kwargs)
+
     model.eval()
     if torch.cuda.is_available():
         model.cuda()

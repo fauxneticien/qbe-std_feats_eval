@@ -4,6 +4,7 @@ import torch
 import soundfile as sf
 import numpy as np
 import pandas as pd
+import torch
 
 from argparse import ArgumentParser
 from glob import glob
@@ -68,6 +69,11 @@ def load_wav2vec2_featurizer(model, layer=None):
     
     model = Wav2Vec2Model.from_pretrained(model_name_or_path, **model_kwargs)
 
+    num_gpus = torch.cuda.device_count()
+
+    if num_gpus > 1:
+        model = torch.nn.DataParallel(model)
+
     model.eval()
     if torch.cuda.is_available():
         model.cuda()
@@ -88,10 +94,10 @@ def load_wav2vec2_featurizer(model, layer=None):
         if layer >= 0:
             hidden_state = model(input_values).last_hidden_state.squeeze(0).cpu().numpy()
         else:
-            hidden_state = model.feature_extractor(input_values)
+            hidden_state = model.feature_extractor(input_values) if num_gpus <= 1 else model.module.feature_extractor(input_values)
             hidden_state = hidden_state.transpose(1, 2)
             if layer == -1:
-                hidden_state = model.feature_projection(hidden_state)
+                hidden_state = model.feature_projection(hidden_state) if num_gpus <= 1 else model.module.feature_projection(hidden_state)
             hidden_state = hidden_state.squeeze(0).cpu().numpy()
 
         return hidden_state

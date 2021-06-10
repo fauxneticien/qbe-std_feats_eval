@@ -2,9 +2,9 @@
 
 # Prep dataset labels and DTW files for use with the NIST STDEval tool
 #  
-# Example usage:
+# Example usage (optional regex filter on CSV files as 4th argument):
 #
-# Rscript scripts/prep_STDEval.R data/raw/datasets data/processed/dtw data/processed/STDEval
+# Rscript scripts/prep_STDEval.R data/raw/datasets data/processed/dtw data/processed/STDEval wav2vec2-large-xlsr-53
 args = commandArgs(trailingOnly=TRUE)
 
 # For debugging:
@@ -12,6 +12,7 @@ args = commandArgs(trailingOnly=TRUE)
 datasets_path <- args[1]
 dtw_csvs_path <- args[2]
 stdeval_path  <- args[3]
+csv_regex     <- args[4]
 
 stopifnot(dir.exists(datasets_path))
 stopifnot(dir.exists(dtw_csvs_path))
@@ -220,8 +221,16 @@ output <- list.files(datasets_path) %>%
     make_tlist_file(dataset, labels_df, tlist_file)
     make_rttm_file(labels_df, rttm_file)
     
-    list.files(dtw_csvs_path, pattern = dataset, full.names = TRUE) %>%
-      keep(~ str_detect(., "\\.csv$")) %>% 
+    csv_files <- list.files(dtw_csvs_path, pattern = dataset, full.names = TRUE) %>%
+      keep(~ str_detect(., "\\.csv$"))
+
+    if(!is.na(csv_regex)) {
+
+      csv_files <- keep(csv_files, ~ str_detect(., csv_regex))
+
+    }
+
+    csv_files %>%
       walk(function(dtw_csv_path) {
         
         dtw_results_df <- read_csv(dtw_csv_path, col_types = "ccid") %>%

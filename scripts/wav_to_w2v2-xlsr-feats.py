@@ -24,7 +24,8 @@ KNOWN_MODELS = {
     'wav2vec2-large-960h': 'facebook/wav2vec2-large-960h',
     'wav2vec2-large-960h-lv60': 'facebook/wav2vec2-large-960h-lv60',
     'wav2vec2-large-960h-lv60-self': 'facebook/wav2vec2-large-960h-lv60-self',
-    'wav2vec2-large-xlsr-53-english': 'jonatasgrosman/wav2vec2-large-xlsr-53-english'
+    'wav2vec2-large-xlsr-53-english': 'jonatasgrosman/wav2vec2-large-xlsr-53-english',
+    'wav2vec2-large-xlsr-53-tamil': 'manandey/wav2vec2-large-xlsr-tamil'
 }
 
 parser = ArgumentParser(

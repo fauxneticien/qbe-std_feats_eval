@@ -184,7 +184,8 @@ cat("", file = stdeval_cmds_file)
 
 message("Preparing files for STDEval tool...")
 
-suppressWarnings(plan(multisession))
+n_workers <- min(availableCores(), 100)
+suppressWarnings(plan(tweak(multisession, workers = n_workers)))
 
 output <- list.files(datasets_path) %>%
   future_map(

@@ -34,7 +34,7 @@ for dataset in datasets:
     # If "_all_" see what features have been extracted for given dataset (in case it differs from dataset to dataset)
     wildcard = '*' if args.features == '_all_' else args.features + "*"
 
-    extracted_feats = [ os.path.basename(p) for p in glob.glob(os.path.join(args.feats_dir, dataset, wildcard)) ]
+    extracted_feats = [ os.path.basename(p) for p in sorted(glob.glob(os.path.join(args.feats_dir, dataset, wildcard))) ]
 
     for features in extracted_feats:
 

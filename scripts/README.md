@@ -70,21 +70,7 @@ mkdir -p data/raw/datasets/gos-kdl
 unzip tmp/gos-kdl.zip -d data/raw/datasets/gos-kdl
 ``` 
 
-### 1.3 Fetch model checkpoint(s)
-
-The exact model checkpoint files used in our pilot and main experiments have been placed on Zenodo ([https://zenodo.org/record/4632537](https://zenodo.org/record/4632537)).
-
-```bash
-# Fetch the Librispeech 960 checkpoint
-wget https://zenodo.org/record/4632537/files/20210225-Large-0FT.pt \
-   -P data/raw/model_checkpoints/
-   
-# Fetch the XLSR-53 checkpoint (optional)
-wget https://zenodo.org/record/4632537/files/20210127-XLSR53.pt \
-   -P data/raw/model_checkpoints/
-```
-
-#### 1.4 Pull docker image(s)
+#### 1.3 Pull docker image(s)
 
 ```bash
 # For extracting wav2vec 2.0 features and running evaluation scripts
@@ -131,22 +117,48 @@ exit
 
 ### 2.2 wav2vec 2.0 features
 
+We use Hugging Face to help fetch the wav2vec 2.0 models to use for feature extraction. The model repo paths (e.g. `facebook/wav2vec2-base`) can be found in the `wav_to_w2v2-feats.py` script (note: for reproducibility of the analyses, the `wav2vec2-large` and `wav2vec2-large-xlsr-53` have specific model versions):
+
+```python
+KNOWN_MODELS = {
+    # Pre-trained
+    'wav2vec2-base': 'facebook/wav2vec2-base',
+    'wav2vec2-large': {'name' : 'facebook/wav2vec2-large', 'revision' : '85c73b1a7c1ee154fd7b06634ca7f42321db94db' },
+    # March 11, 2021 version: https://huggingface.co/facebook/wav2vec2-large/commit/85c73b1a7c1ee154fd7b06634ca7f42321db94db
+    'wav2vec2-large-lv60': 'facebook/wav2vec2-large-lv60',
+    'wav2vec2-large-xlsr-53': {'name' : 'facebook/wav2vec2-large-xlsr-53', 'revision' : '8e86806e53a4df405405f5c854682c785ae271da' },
+    # May 6, 2021 version: https://huggingface.co/facebook/wav2vec2-large-xlsr-53/commit/8e86806e53a4df405405f5c854682c785ae271da
+    
+    # Fine-tuned
+    'wav2vec2-base-960h': 'facebook/wav2vec2-base-960h',
+    'wav2vec2-large-960h': 'facebook/wav2vec2-large-960h',
+    'wav2vec2-large-960h-lv60': 'facebook/wav2vec2-large-960h-lv60',
+    'wav2vec2-large-960h-lv60-self': 'facebook/wav2vec2-large-960h-lv60-self',
+    'wav2vec2-large-xlsr-53-english': 'jonatasgrosman/wav2vec2-large-xlsr-53-english',
+    'wav2vec2-large-xlsr-53-tamil': 'manandey/wav2vec2-large-xlsr-tamil'
+}
+```
+
+To extract features using one of these models run:
+
 ```bash
 # Start docker container according to 'dev' config
 # specified in the docker-compose.yml file
 docker-compose run --rm dev
 
 # Extract features from all stages/layers (encoder, quantizer, transformer 1-24)
-# of wav2vec 2.0 model using model weights from specified checkpoint file.
+# of wav2vec 2.0 model (wav2vec2-large, revision: 85c73b)
 #
 # For help, run: python scripts/wav_to_w2v2-feats.py -h
 
-python scripts/wav_to_w2v2-feats.py \
-    data/raw/model_checkpoints/20210225-Large-0FT.pt \
-    gos-kdl \
-    --stage _all_ \
-    --layer _all_
+python scripts/wav_to_w2v2-xlsr-feats.py \
+   --dataset gos-kdl \
+   --stage _all_ \
+   --layer _all_ \
+   --model wav2vec2-large
 ```
+
+
 
 ### 2.3 Fetch features from Zenodo (optional)
 

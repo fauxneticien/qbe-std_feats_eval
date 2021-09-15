@@ -1,149 +1,184 @@
-import argparse
-import glob
 import os
 import pickle
+import torch
+import soundfile as sf
 import numpy as np
 import pandas as pd
+import torch
+
+from argparse import ArgumentParser
+from glob import glob
+from transformers import logging
+from transformers.models.wav2vec2 import Wav2Vec2Model
 from pathlib import Path
 from tqdm import tqdm
 
-import fairseq
-import torch
-import torchaudio
+KNOWN_MODELS = {
+    # Pre-trained
+    'wav2vec2-base': 'facebook/wav2vec2-base',
+    'wav2vec2-large': {'name' : 'facebook/wav2vec2-large', 'revision' : '85c73b1a7c1ee154fd7b06634ca7f42321db94db' },
+    # March 11, 2021 version: https://huggingface.co/facebook/wav2vec2-large/commit/85c73b1a7c1ee154fd7b06634ca7f42321db94db
+    'wav2vec2-large-lv60': 'facebook/wav2vec2-large-lv60',
+    'wav2vec2-large-xlsr-53': {'name' : 'facebook/wav2vec2-large-xlsr-53', 'revision' : '8e86806e53a4df405405f5c854682c785ae271da' },
+    # May 6, 2021 version: https://huggingface.co/facebook/wav2vec2-large-xlsr-53/commit/8e86806e53a4df405405f5c854682c785ae271da
+    
+    # Fine-tuned
+    'wav2vec2-base-960h': 'facebook/wav2vec2-base-960h',
+    'wav2vec2-large-960h': 'facebook/wav2vec2-large-960h',
+    'wav2vec2-large-960h-lv60': 'facebook/wav2vec2-large-960h-lv60',
+    'wav2vec2-large-960h-lv60-self': 'facebook/wav2vec2-large-960h-lv60-self',
+    'wav2vec2-large-xlsr-53-english': 'jonatasgrosman/wav2vec2-large-xlsr-53-english',
+    'wav2vec2-large-xlsr-53-tamil': 'manandey/wav2vec2-large-xlsr-tamil'
+}
 
-parser = argparse.ArgumentParser(
-    description='example: python wav_to_w2v2-feats.py data/raw/model_checkpoints/20210127_LV60-0FT.pt wrm-pd',
-    formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
+parser = ArgumentParser(
+    prog='Wav2Vec2 Featurizer',
+    description='Runs full featurization of wav files for downstream usage.',
+)
 
-parser.add_argument('model_pt', help='path to wav2vec 2.0 model checkpoint')
-parser.add_argument('dataset', help = 'name of dataset, use _all_ to iterate over all')
-
-parser.add_argument('--stage', default = 'encoder', help = 'name of wav2vec 2.0 output stage: encoder, quantizer, transformer, or _all_')
+parser.add_argument('--dataset', help = 'name of dataset, use _all_ to iterate over all')
+parser.add_argument('--stage', default = 'transformer', help = 'name of wav2vec 2.0 output stage: encoder, quantizer, transformer, or _all_')
 parser.add_argument('--layer', default = '1', help = 'if stage is transformer, which layer of transformer, or _all_')
 
-parser.add_argument('--feats_dir',  default='data/interim/features', help = "directory for features")
-parser.add_argument('--datasets_dir', default='data/raw/datasets', help = "directory for raw datasets and labels files")
+parser.add_argument('--feats_dir',  default='data/interim/features', help = 'directory for features')
+parser.add_argument('--datasets_dir', default='data/raw/datasets', help = 'directory for raw datasets and labels files')
 
-parser.add_argument('--queries_dir',  default='queries', help = "directory with .wav files for queries")
-parser.add_argument('--references_dir',  default='references', help = "directory with .wav files for references")
+parser.add_argument('--queries_dir',  default='queries', help = 'directory with .wav files for queries')
+parser.add_argument('--references_dir',  default='references', help = 'directory with .wav files for references')
+
+parser.add_argument('--model', default='wav2vec2-large-xlsr-53')
+parser.add_argument('--hft_logging', default=40, help='HuggingFace Transformers verbosity level (40 = errors, 30 = warnings, 20 = info, 10 = debug)')
 
 args = parser.parse_args()
 
-model, cfg, task = fairseq.checkpoint_utils.load_model_ensemble_and_task([args.model_pt])
-model = model[0]
-model = model.eval()
+logging.set_verbosity(args.hft_logging)
 
-if torch.cuda.device_count() > 0:
-    model.cuda()
+def load_wav2vec2_featurizer(model, layer=None):
+    """
+    Loads Wav2Vec2 featurization pipeline and returns it as a function.
+    Featurizer returns a list with all hidden layer representations if "layer" argument is None.
+    Otherwise, only returns the specified layer representations.
+    """
 
-def extract_w2v2_feats(wav_data, stage, layer = None, model = model):
+    model_spec = KNOWN_MODELS.get(model, model)
+    model_kwargs = {}
+    if layer is not None:
+        model_kwargs["num_hidden_layers"] = layer if layer > 0 else 0
 
-    if torch.cuda.device_count() > 0:
-        wav_data = wav_data.cuda()
-
-    if stage == "encoder":
-
-        x = model.feature_extractor(wav_data)
-        x = x.transpose(1, 2)
-
-    elif stage == "quantizer":
-
-        x, _ = model.quantize(wav_data)
-
+    if type(model_spec) is dict:
+        model_name_or_path       = model_spec['name']
+        model_kwargs['revision'] = model_spec['revision']
     else:
-
-        x = model.feature_extractor(wav_data)
-        x = x.transpose(1, 2)
-        x = model.layer_norm(x)
-        x = model.post_extract_proj(x)
-
-        # Transformer encoder
-        x_conv = model.encoder.pos_conv(x.transpose(1, 2))
-        x_conv = x_conv.transpose(1, 2)
-        x += x_conv
-
-        if not model.encoder.layer_norm_first:
-            x = model.encoder.layer_norm(x)
-            
-        x = x.transpose(0, 1)
-
-        for i, t_layer in enumerate(model.encoder.layers):
-            x, z = t_layer(x, self_attn_padding_mask=None, need_weights=False)
-            if i == layer - 1:
-                break
-
-        x = x.transpose(0, 1)
+        model_name_or_path = model_spec
     
-    return x.squeeze(0).detach().cpu().numpy()
+    model = Wav2Vec2Model.from_pretrained(model_name_or_path, **model_kwargs)
 
-def load_audio(wav_path):
-    wav_dat, wav_sr = torchaudio.load(wav_path)
-    # Resample to 16 kHz for wav2vec 2.0, and covert to mono if necessary
-    wav_dat = torchaudio.transforms.Resample(wav_sr, 16000)(wav_dat).mean(0, True)
+    num_gpus = torch.cuda.device_count()
 
-    return wav_dat
+    if num_gpus > 1:
+        model = torch.nn.DataParallel(model)
 
-def dir_to_w2v2_feats_pkl(stage, layer, input_dir, output_pickle):
+    model.eval()
+    if torch.cuda.is_available():
+        model.cuda()
 
-    assert os.path.isdir(input_dir)
+    @torch.no_grad()
+    def _featurize(path):
+        input_values, rate = sf.read(path, dtype=np.float32)
+        assert rate == 16_000
+        input_values = torch.from_numpy(input_values).unsqueeze(0)
+        if torch.cuda.is_available():
+            input_values = input_values.cuda()
 
-    input_files = glob.glob(os.path.join(input_dir, "*.wav"))
-    input_wavs  = [ load_audio(f) for f in input_files ]
+        if layer is None:
+            hidden_states = model(input_values, output_hidden_states=True).hidden_states
+            hidden_states = [s.squeeze(0).cpu().numpy() for s in hidden_states]
+            return hidden_states
 
-    fnames_list = [ os.path.splitext(os.path.basename(f))[0] for f in input_files ] # '.../filename.wav' => 'filename',
-    feats_list  = [ extract_w2v2_feats(w, stage, layer) for w in tqdm(input_wavs) ]
+        if layer >= 0:
+            hidden_state = model(input_values).last_hidden_state.squeeze(0).cpu().numpy()
+        else:
+            hidden_state = model.feature_extractor(input_values) if num_gpus <= 1 else model.module.feature_extractor(input_values)
+            hidden_state = hidden_state.transpose(1, 2)
+            if layer == -1:
+                hidden_state = model.feature_projection(hidden_state) if num_gpus <= 1 else model.module.feature_projection(hidden_state)
+            hidden_state = hidden_state.squeeze(0).cpu().numpy()
+
+        return hidden_state
+
+    return _featurize
+
+def featurize(wav_paths, layer, stage, dataset):
+    '''
+    Computes w2v2 from the queries and references files
+    '''
+
+    featurizer = load_wav2vec2_featurizer(args.model, layer=layer)
+    
+    fnames_list = []
+    feats_list = []
+    
+    # Create features for each wav file
+    for wav_path in tqdm(wav_paths, ncols=80):
+        proc_set = wav_path.split('/')[-2]
+
+        # Extract features
+        hidden_states = featurizer(wav_path)
+        fnames_list.append(wav_path.split('/')[-1][:-4])
+        # print(hidden_states.shape)
+        feats_list.append(hidden_states)
 
     feats_df = pd.DataFrame({
-        "filename" : fnames_list,
-        "features" : feats_list
+        'filename' : fnames_list,
+        'features' : feats_list
     })
 
-    with open(output_pickle, 'wb') as handle:
+    if layer < 0:
+        # e.g. wav2vec2-large-xlsr-53_encoder or # wav2vec2-large-xlsr-53_quantizer
+        stage_name = "{}_{}".format(args.model, stage)
+    else:
+        # e.g. wav2vec2-large-xlsr-53_transformer-L01
+        stage_name = "{}_{}-L{}".format(args.model, stage, str(layer).zfill(2))
+
+    ds_feat_output_dir = os.path.join(args.feats_dir, dataset, stage_name)
+    Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
+    
+    with open(ds_feat_output_dir + '/' + proc_set + '.pickle', 'wb') as handle:
         pickle.dump(feats_df, handle)
 
-    print("Features written to {}".format(output_pickle))
+def main():
+    datasets = [ os.path.basename(p) for p in glob.glob(os.path.join(args.datasets_dir, '*')) ] if args.dataset == '_all_' else [ args.dataset ]
 
-datasets = [ os.path.basename(p) for p in glob.glob(os.path.join(args.datasets_dir, "*")) ] if args.dataset == '_all_' else [ args.dataset ]
+    assert args.stage in ['encoder', 'quantizer', 'transformer', '_all_'], 'Unknown wav2vec 2.0 stage specified: {}'.format(args.stage)
+    stages = [ 'encoder', 'quantizer', 'transformer' ] if args.stage == '_all_' else [ args.stage ]
 
-model_name = os.path.splitext(os.path.basename(args.model_pt))[0]
+    for dataset in datasets:
 
-assert args.stage in ["encoder", "quantizer", "transformer", "_all_"], "Unknown wav2vec 2.0 stage specified: {}".format(args.stage)
-stages = [ "encoder", "quantizer", "transformer" ] if args.stage == "_all_" else [ args.stage ]
+        for stage in stages:
+            
+            # Check wav files in input directory
+            queries_wav_paths = glob(os.path.join(args.datasets_dir, dataset, args.queries_dir) + '/*.wav')
+            assert len(queries_wav_paths) > 0, f'No wav files found in {args.input_dir}'
 
-if "transformer" in stages:
-    layers = list(range(1, len(model.encoder.layers) + 1)) if args.layer == "_all_" else [ int(args.layer) ]
+            refs_wav_paths = glob(os.path.join(args.datasets_dir, dataset, args.references_dir) + '/*.wav')
+            assert len(refs_wav_paths) > 0, f'No wav files found in {args.input_dir}'
 
-for dataset in datasets:
+            if stage == 'encoder':
+                layers = [-2]
 
-    for stage in stages:
-
-        queries_wav_dir  = os.path.join(args.datasets_dir, dataset, args.queries_dir)
-        refs_wav_dir    = os.path.join(args.datasets_dir, dataset, args.references_dir)
-
-        if stage in ["encoder", "quantizer"]:
-
-            feature = "{}_{}".format(model_name, stage) # LV60-0FT_encoder or # LV60-0FT_quantizer
-            ds_feat_output_dir = os.path.join(args.feats_dir, dataset, feature)
-            Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
-
-            queries_pkl_path = os.path.join(ds_feat_output_dir, "queries.pickle")
-            refs_pkl_path   = os.path.join(ds_feat_output_dir, "references.pickle")
-
-            dir_to_w2v2_feats_pkl(stage, None, queries_wav_dir, queries_pkl_path)
-            dir_to_w2v2_feats_pkl(stage, None, refs_wav_dir, refs_pkl_path)
-
-        if stage == "transformer":
+            if stage == 'quantizer':
+                layers = [-1]
+            
+            if stage == 'transformer':
+                if args.layer == '_all_':
+                    layers = list(range(1, 25))
+                else:
+                    assert int(args.layer) > 0 or int(args.layer) <= 24, f'Specified transformer layer {args.layer} out of range'
+                    layers = [ int(args.layer) ]
 
             for layer in layers:
-                assert layer > 0 or layer <= len(model.encoder.layers), "Specified transformer layer out of range"
+                featurize(queries_wav_paths, layer, stage, dataset)
+                featurize(refs_wav_paths, layer, stage, dataset)             
 
-                feature = "{}_{}-L{}".format(model_name, stage, str(layer).zfill(2)) # e.g. LV60-0FT_transformer-L01
-                ds_feat_output_dir = os.path.join(args.feats_dir, dataset, feature)
-                Path(ds_feat_output_dir).mkdir(parents=True, exist_ok=True)
-
-                queries_pkl_path = os.path.join(ds_feat_output_dir, "queries.pickle")
-                refs_pkl_path   = os.path.join(ds_feat_output_dir, "references.pickle")
-
-                dir_to_w2v2_feats_pkl(stage, layer, queries_wav_dir, queries_pkl_path)
-                dir_to_w2v2_feats_pkl(stage, layer, refs_wav_dir, refs_pkl_path)
+if __name__ == '__main__':
+    main()                  

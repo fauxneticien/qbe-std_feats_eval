@@ -23,38 +23,46 @@ pacman::p_load(
   dplyr,
   readr,
   stringr,
-  tidyr
+  tidyr,
+  broom
 )
 
 source(here("analyses/plot_mtwvs.R"))
 ```
 
-## Main experiment MTWVs
+## All MTWVs
 
 ```{r Make mtwv_df}
-main_mtwv_df <- read_csv(
-  file = here("analyses/data/main-all_mtwv.csv"),
+mtwv_df <- read_csv(
+  file = here("analyses/data/all_mtwv.csv"),
   col_types = "ccdddd"
 )
 
 # Show mtwv_df in Markdown document
-head(main_mtwv_df) %>%
+head(mtwv_df) %>%
   kable()
 ```
 
-### All MTWVs plotted
+### All MTWVs plotted (Fig. 2 in paper)
 
 ```{r Main MTWVs plot, fig.width=11, fig.height=4, warning=FALSE, message=FALSE}
-plot_mtwvs(main_mtwv_df)
+mtwv_df %>%
+  filter(str_detect(features, "(bnf|mfcc|Large)")) %>%
+  plot_mtwvs(wav2vec_checkpoint_name = "wav2vec 2.0 Large (LibriSpeech 960h)")
 ```
 
+```{r XLSR53 MTWVs plot, fig.width=11, fig.height=4, warning=FALSE, message=FALSE}
+mtwv_df %>%
+  filter(str_detect(features, "(bnf|mfcc|xlsr)")) %>%
+  plot_mtwvs(wav2vec_checkpoint_name = "wav2vec 2.0 Large (XLSR53)")
+```
 
 ### Reported numbers
 
 #### Baseline performance (MFCC and BNF)
 
 ```{r baselines}
-main_mtwv_df %>%
+mtwv_df %>%
     mutate(
       baseline = str_extract(features, "(mfcc|bnf)"),
       mtwv     = round(mtwv, 2)
@@ -67,36 +75,14 @@ main_mtwv_df %>%
     kable()
 ```
 
-##### Baseline means
-
-```{r Baseline means}
-main_mtwv_df %>%
-    filter(str_detect(features, "(mfcc|bnf)")) %>% 
-    group_by(features) %>%
-    summarise(mean_mtwv = round(mean(mtwv), 3)) %>%
-    arrange(mean_mtwv) %>%
-    kable()
-```
-
-
-#### wav2vec 2.0 middle Transformer layers
-
-```{r Middle transformers}
-main_mtwv_df %>%
-    filter(str_detect(features, "transformer-L1[0-4]")) %>% 
-    group_by(features) %>%
-    summarise(mean_mtwv = round(mean(mtwv), 3)) %>%
-    arrange(mean_mtwv) %>%
-    kable()
-```
 
 #### Improvement on wbp-jk and mwf-jm
 
 ```{r Worst improvements}
-main_mtwv_df %>%
+mtwv_df %>%
   filter(
     dataset %in% c("wbp-jk", "mwf-jm"),
-    str_detect(features, "(bnf|L11)")
+    str_detect(features, "(bnf|Large-0FT_transformer-L11)")
   ) %>%
   select(dataset, features, mtwv) %>%
   mutate(mtwv = round(mtwv, 2)) %>% 
@@ -108,17 +94,94 @@ main_mtwv_df %>%
   arrange(percent_improvement) %>% 
   kable()
 ```
-#### w2v2-T11 performance, Gronings vs. Australian languages
 
-```{r w2v2-T11}
-main_mtwv_df %>%
-  filter(
-    dataset != "eng-mav",
-    str_detect(features, "L11")
+#### Means and standard deviations of BNF, LS960-T11 and XLSR53-T11 (Table 2 in paper)
+
+```{r Means and SDs}
+mtwv_by_queries <- read_csv(
+  here("analyses/data/mtwv_by_queries.csv"),
+  col_types = "ccciiiiddd"
+  )
+
+mtwv_by_queries %>%
+  group_by(dataset, features) %>%
+  summarise(
+    mean = mean(mtwv),
+    sd = sd(mtwv),
+    .groups = "keep"
   ) %>%
-  select(dataset, features, mtwv) %>%
-  mutate(mtwv = round(mtwv, 2)) %>% 
-  arrange(desc(mtwv)) %>%
+  mutate(stat = paste(signif(mean, 3), " (", signif(sd, 3), ")", sep = "")) %>%
+  select(dataset, features, stat) %>%
+  spread(features, stat) %>%
+  select(dataset, bnf, `20210225-Large-0FT_transformer-L11`, `wav2vec2-large-xlsr-53_transformer-L11`) %>%
   kable()
 ```
 
+#### One-sided paired t-tests
+
+```{r Test function}
+t_test_func <- function(greater_hyp, less_hyp) {
+  
+  mtwv_by_queries %>%
+    filter(features %in% c(greater_hyp, less_hyp)) %>%
+    split(.$dataset) %>%
+    imap_dfr(function(xlsr_vs_mono, dataset) {
+    
+    t_test_ds <- xlsr_vs_mono %>%
+      select(features, mtwv, query) %>%
+      spread(features, mtwv)
+    
+    gt_hyp_vals <- pull(t_test_ds[, greater_hyp])
+    lt_hyp_vals <- pull(t_test_ds[, less_hyp])
+    
+    t.test(
+      x = gt_hyp_vals,
+      y = lt_hyp_vals,
+      alternative = "greater",
+      paired = TRUE
+    ) %>% 
+      tidy() %>%
+      mutate(
+        dataset = dataset,
+        p.value = round(p.value, 3),
+        gt_mean = mean(gt_hyp_vals),
+        lt_mean = mean(lt_hyp_vals)
+      ) %>% 
+    select(dataset, gt_mean, lt_mean, dof = parameter, diff = estimate, t.value = statistic, p.value)
+    
+  })
+  
+}
+```
+
+
+##### 20210225-Large-0FT_transformer-L11 vs. BNF
+
+```{r t-tests LS960-T11 vs. BNF}
+t_test_func(
+    greater_hyp = "20210225-Large-0FT_transformer-L11",
+    less_hyp = "bnf"
+  ) %>%
+  kable()
+```
+
+
+##### wav2vec2-large-xlsr-53_transformer-L11 vs. BNF
+
+```{r t-tests XLSR53-T11 vs. BNF}
+t_test_func(
+    greater_hyp = "wav2vec2-large-xlsr-53_transformer-L11",
+    less_hyp = "bnf"
+  ) %>%
+  kable()
+```
+
+##### 20210225-Large-0FT_transformer-L11 vs. wav2vec2-large-xlsr-53_transformer-L11
+
+```{r t-tests LS960-T11 vs. XLSR53-T11}
+t_test_func(
+    greater_hyp = "20210225-Large-0FT_transformer-L11",
+    less_hyp= "wav2vec2-large-xlsr-53_transformer-L11"
+  ) %>%
+  kable()
+```
